@@ -14,7 +14,7 @@ examples
 example
 exp-example
 scripts
-babel.config.js
+babel.config.mjs
 metro.config.js
 scripts/
 src/
@@ -36,3 +36,4 @@ lib/assets/data/countries-image.json
 lib/assets/images/icon.png
 lib/assets/images/splash.png
 .expo-shared/assets.json
+biome.jsonc

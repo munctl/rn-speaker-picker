@@ -1,40 +1,19 @@
-<h3>
-  Country Picker for React Native.
-</h3>
+# RN Speaker Picker
+A fork of [react-native-country-picker-modal](https://github.com/xcarpentier/react-native-country-picker-modal) with tweaks for use in [MUNctl](https://munctl.app/).
 
-<p>
-   <a href="https://reactnative.gallery/xcarpentier/country-picker"><img src="https://img.shields.io/badge/reactnative.gallery-%F0%9F%8E%AC-green.svg"/></a>
-  <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/v/react-native-country-picker-modal.svg?style=flat-square"></a>
-  <a href="https://www.npmjs.com/package/react-native-country-picker-modal"><img src="https://img.shields.io/npm/dm/react-native-country-picker-modal.svg?style=flat-square"></a>
-  <a href="#hire-an-expert"><img src="https://img.shields.io/badge/%F0%9F%92%AA-hire%20an%20expert-brightgreen"/></a>
-</p>
+## Tweaks
+* Add custom entries at runtime
+* Visual changes
 
 | iOS                                                                                               | Android                                                                                           | Web                                                                                               |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | <img  src="https://media.giphy.com/media/cKmlP4Ue5pUrH0DQLi/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/Q7SDti4eARGx2CQIGE/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/gKl3z3c7sVVL7KSSh8/giphy.gif" width="250" height="400"/> |
 
-## Sponsor
 
-<br>
-<p align="center">
- <a href="https://amzn.to/3ZmTyb2" target="_blank">React Key Concepts: Consolidate your knowledge of React’s core features (2nd ed. Edition)</a>
-</p>
-
-
-## Demo
-
-- 🎉[ GO TO WEB DEMO ](http://xcarpentier.github.io/react-native-country-picker-modal/) 🎉
-- [snack example](https://snack.expo.io/@xcarpentier/bossy-marshmallows)
-
-## Installation
-
-```bash
-$ yarn add react-native-country-picker-modal
-```
 
 ## Basic Usage
 
-For more complete example open [App.tsx](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/App.tsx)
+For more complete example, open [App.tsx](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/App.tsx)
 
 ```tsx
 import React, { useState } from 'react'
@@ -162,44 +141,6 @@ import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal'
 const MyDarkView = () => <CountryPicker theme={DARK_THEME} />
 ```
 
-## Dependencies
-
-- world-countries : https://www.npmjs.com/package/world-countries
-
-## FAQ
-
-### Is it supported and tested both on android and iOS?
-
-YES
-
-### Is the data that is populated inside the list saved offline once I install your package?
-
-YES : It used the world-countries package and image is stored into json and base64.
-
-## Tiers lib using this lib
-
-- [react-native-phone-verification](https://github.com/joinspontaneous/react-native-phone-verification)
-
-[> Your project?](https://github.com/xcarpentier/react-native-linkedin/issues/new)
-
-## See also
-
-- [react-native-linkedin](https://github.com/xcarpentier/react-native-linkedin)
-
-## Contribution
-
-- [@xcapentier](mailto:contact@xaviercarpentier.com) The main author.
-
-## Questions
-
-Feel free to [contact me](mailto:contact@xaviercarpentier.com) or [create an issue](https://github.com/xcarpentier/react-native-country-picker/issues/new)
-
-> made with ♥
-
-## Licence
+## License
 
 [MIT](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/LICENSE.md)
-
-## Hire an expert!
-
-Looking for a ReactNative freelance expert with more than 12 years experience? Contact me from my [website](https://xaviercarpentier.com)!
