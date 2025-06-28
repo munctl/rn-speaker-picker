@@ -8,7 +8,7 @@ import CountryPicker, {
 } from "./src"
 import { Row } from "./src/Row"
 import "./src/assets/global.css"
-import { useColorScheme } from "nativewind"
+import { colorScheme } from "nativewind"
 
 interface OptionProps {
 	title: string
@@ -48,9 +48,8 @@ export default function App() {
 	}
 	const switchVisible = () => setVisible(!visible)
 
-	const { setColorScheme } = useColorScheme()
 	useEffect(() => {
-		setColorScheme(dark ? "dark" : "light")
+		colorScheme.set(dark ? "dark" : "light")
 	}, [dark])
 
 	return (

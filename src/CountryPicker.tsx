@@ -11,9 +11,9 @@ import { useContext } from "./CountryContext"
 import { CountryFilter, CountryFilterProps } from "./CountryFilter"
 import { CountryModal } from "./CountryModal"
 import { FlagButton } from "./FlagButton"
-import { HeaderModal } from "./HeaderModal"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
 import SpeakerList from "./v2/list/SpeakerList"
+import { HeaderModal } from "./HeaderModal"
 
 interface State {
 	visible: boolean
