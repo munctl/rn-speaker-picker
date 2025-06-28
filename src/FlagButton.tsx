@@ -24,11 +24,6 @@ const styles = StyleSheet.create({
 	containerWithoutEmoji: {
 		marginTop: 5,
 	},
-	flagWithSomethingContainer: {
-		flexDirection: "row",
-		flexWrap: "wrap",
-		alignItems: "center",
-	},
 	something: { fontSize: 16 },
 })
 
@@ -79,8 +74,15 @@ const FlagWithSomething = memo(
 			withCallingCodeButton,
 		])
 
+		function getSuffix() {
+			if (!withCallingCodeButton && !withCurrencyButton) return ""
+			if (withCurrencyButton && withCallingCodeButton)
+				return `(+${callingCode}, ${currency})`
+			return withCallingCodeButton ? `(+${callingCode})` : `(${currency})`
+		}
+
 		return (
-			<View style={styles.flagWithSomethingContainer}>
+			<View className="flex-row flex-wrap items-center">
 				{countryCode ? (
 					<Flag {...{ withEmoji, countryCode, withFlagButton, flagSize }} />
 				) : (
@@ -92,15 +94,8 @@ const FlagWithSomething = memo(
 						{countryName + " "}
 					</FlagText>
 				) : null}
-				{withCurrencyButton && currency ? (
-					<FlagText
-						allowFontScaling={allowFontScaling}
-					>{`(${currency}) `}</FlagText>
-				) : null}
-				{withCallingCodeButton && callingCode ? (
-					<FlagText
-						allowFontScaling={allowFontScaling}
-					>{`+${callingCode}`}</FlagText>
+				{getSuffix() ? (
+					<FlagText allowFontScaling={allowFontScaling}>{getSuffix()}</FlagText>
 				) : null}
 			</View>
 		)

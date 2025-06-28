@@ -152,12 +152,12 @@ export default function App() {
 					Press on the flag to open the modal.
 				</Text>
 				<Button
-					title={"Open the modal from outside using visible props"}
+					title="Open the modal externally via useState."
 					onPress={switchVisible}
 				/>
 				{country !== null && (
 					<Text className="bg-zinc-200 dark:bg-zinc-800 border border-zinc-500 text-zinc-600 dark:text-zinc-300 w-96 mt-4 p-2 mb-8">
-						{JSON.stringify(country, null, 0) ??
+						{JSON.stringify(country, null, 2) ??
 							"Select a country to show JSON data."}
 					</Text>
 				)}

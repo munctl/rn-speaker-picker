@@ -15,54 +15,12 @@ import { useTheme } from "./CountryTheme"
 import { Flag } from "./Flag"
 import { Country } from "./types"
 
-const borderBottomWidth = 2 / PixelRatio.get()
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: "row",
-		justifyContent: "space-between",
-	},
-	letters: {
-		flex: 1,
-		marginRight: 10,
-		backgroundColor: "transparent",
-		justifyContent: "space-between",
-		alignItems: "center",
-	},
-	letter: {
-		height: 23,
-		width: 20,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	letterText: {
-		textAlign: "center",
-	},
-	itemCountry: {
-		flexDirection: "row",
-		justifyContent: "flex-start",
-		alignItems: "center",
-		paddingHorizontal: 5,
-	},
-	itemCountryName: {
-		width: "90%",
-	},
-	list: {
-		flex: 1,
-	},
-	sep: {
-		borderBottomWidth,
-		width: "100%",
-	},
-})
-
 interface LetterProps {
 	letter: string
 	scrollTo(letter: string): void
 }
 const Letter = ({ letter, scrollTo }: LetterProps) => {
-	const { fontSize, activeOpacity } = useTheme()
+	const { activeOpacity } = useTheme()
 
 	return (
 		<TouchableOpacity
@@ -71,10 +29,8 @@ const Letter = ({ letter, scrollTo }: LetterProps) => {
 			onPress={() => scrollTo(letter)}
 			{...{ activeOpacity }}
 		>
-			<View style={styles.letter}>
-				<CountryText style={[styles.letterText, { fontSize: fontSize! * 0.8 }]}>
-					{letter}
-				</CountryText>
+			<View className="justify-center items-center">
+				<CountryText className="text-center">{letter}</CountryText>
 			</View>
 		</TouchableOpacity>
 	)
@@ -89,7 +45,7 @@ interface CountryItemProps {
 	onSelect(country: Country): void
 }
 const CountryItem = (props: CountryItemProps) => {
-	const { activeOpacity, itemHeight, flagSize } = useTheme()
+	const { activeOpacity, flagSize } = useTheme()
 	const {
 		country,
 		onSelect,
@@ -114,22 +70,19 @@ const CountryItem = (props: CountryItemProps) => {
 
 	return (
 		<TouchableOpacity
-			className="bg-zinc-200 dark:bg-zinc-800 px-2 py-4 my-1 rounded-md"
+			className="bg-zinc-200 dark:bg-zinc-800 px-2 my-1 rounded-md"
 			key={country.cca2}
 			testID={`country-selector-${country.cca2}`}
 			onPress={() => onSelect(country)}
 			{...{ activeOpacity }}
 		>
-			<View
-				style={[styles.itemCountry, { height: itemHeight }]}
-				className="flex flex-row items-center gap-2"
-			>
+			<View className="py-4 flex flex-row items-center gap-2">
 				{withFlag && (
 					<Flag
 						{...{ withEmoji, countryCode: country.cca2, flagSize: flagSize! }}
 					/>
 				)}
-				<View style={styles.itemCountryName}>
+				<View>
 					<CountryText numberOfLines={2} ellipsizeMode="tail">
 						{countryName}
 						{extraContent.length > 0 && ` (${extraContent.join(", ")})`}
@@ -160,9 +113,8 @@ interface CountryListProps {
 }
 
 const ItemSeparatorComponent = () => {
-	const { primaryColorVariant } = useTheme()
 	return (
-		<View style={[styles.sep, { borderBottomColor: primaryColorVariant }]} />
+		<View className="border-b border-b-zinc-800/20 dark:border-b-zinc-100/20 w-full" />
 	)
 }
 
@@ -184,7 +136,7 @@ export function CountryList(props: CountryListProps) {
 
 	const flatListRef = useRef<FlashList<Country>>(null)
 	const [letter, setLetter] = useState<string>("")
-	const { itemHeight, backgroundColor } = useTheme()
+	const { itemHeight } = useTheme()
 	const indexLetter = data
 		.map((country: Country) => (country.name as string).slice(0, 1))
 		.join("")
@@ -212,20 +164,13 @@ export function CountryList(props: CountryListProps) {
 
 	const initialNumToRender = Math.round(height / (itemHeight || 1))
 	return (
-		<View style={[styles.container, { backgroundColor }]}>
+		<View className="flex-1 flex-row content-between mx-1">
 			<FlashList
 				ref={flatListRef}
 				testID="list-countries"
 				keyboardShouldPersistTaps="handled"
 				automaticallyAdjustContentInsets={false}
 				scrollEventThrottle={1}
-				/*renderItem={renderItem({
-					withEmoji,
-					withFlag,
-					withCallingCode,
-					withCurrency,
-					onSelect,
-				})}*/
 				// @ts-ignore
 				renderItem={(item) => (
 					<MemoCountryItem
@@ -249,7 +194,8 @@ export function CountryList(props: CountryListProps) {
 			{withAlphaFilter && (
 				<ScrollView
 					scrollEnabled={false}
-					contentContainerStyle={styles.letters}
+					contentContainerClassName="flex-1 bg-transparent items-center justify-between"
+					className="flex-grow-0 pl-4 pr-3"
 					keyboardShouldPersistTaps="always"
 				>
 					{letters.map((letter) => (
