@@ -7,10 +7,9 @@ import {
 	GestureUpdateEvent,
 	PanGestureChangeEventPayload,
 	PanGestureHandlerEventPayload,
-	State,
 } from "react-native-gesture-handler"
 import { FlashList } from "@shopify/flash-list"
-import { useSharedValue } from "react-native-reanimated"
+import { runOnJS, useSharedValue } from "react-native-reanimated"
 
 export interface CustomAlphabetScrollListProps {
 	withAlphaFilter?: boolean
@@ -44,6 +43,7 @@ export function AlphabetScrollList<T>({
 	const flashListRef = useRef<FlashList<T | string>>(null)
 	const letterTops = useRef<number[]>([])
 	const containerY = useSharedValue(0)
+	const containerHeightRef = useSharedValue(0)
 
 	// Memoize section titles for fast lookup
 	const sectionTitles = sections.map((s) => s.title)
@@ -64,7 +64,7 @@ export function AlphabetScrollList<T>({
 		flatData.findIndex((item) => item === title)
 
 	// Scroll to section by index
-	const scrollToSection = (index: number) => {
+	function scrollToSection(index: number) {
 		if (index >= 0 && index < sections.length) {
 			const headerIndex = getSectionHeaderIndex(sections[index].title)
 			if (headerIndex !== -1 && flashListRef.current) {
@@ -80,31 +80,28 @@ export function AlphabetScrollList<T>({
 
 	// Pan gesture for alpha filter
 	const onGestureEvent = (
-		event: GestureUpdateEvent<
-			PanGestureHandlerEventPayload & PanGestureChangeEventPayload
-		>,
+		event: GestureUpdateEvent<PanGestureHandlerEventPayload>,
 	) => {
-		if (event.state === State.ACTIVE || event.state === State.BEGAN) {
-			const y = event.y - containerY.get()
-			const containerHeight =
-				letterTops.current[sections.length - 1] +
-				(letterTops.current[1] - letterTops.current[0] || 1)
-			const letterHeight = containerHeight / sections.length
-			let index = Math.floor(y / letterHeight)
-			if (index < 0) index = 0
-			if (index >= sections.length) index = sections.length - 1
-			scrollToSection(index)
-		}
+		// Use absoluteY for more reliable finger position
+		const y = event.absoluteY - containerY.get()
+		const containerHeight = containerHeightRef.get()
+		const letterHeight = containerHeight / sections.length || 1
+		let index = Math.floor(y / letterHeight)
+		if (index < 0) index = 0
+		if (index >= sections.length) index = sections.length - 1
+		runOnJS(scrollToSection)(index)
 	}
 
 	// Layout handlers
-	const onContainerLayout = (e: LayoutChangeEvent) =>
+	const onContainerLayout = (e: LayoutChangeEvent) => {
 		containerY.set(e.nativeEvent.layout.y)
+		containerHeightRef.set(e.nativeEvent.layout.height)
+	}
 	const onLetterLayout = (index: number, e: LayoutChangeEvent) => {
 		letterTops.current[index] = e.nativeEvent.layout.y
 	}
 
-	const pan = Gesture.Pan().onChange(onGestureEvent)
+	const pan = Gesture.Pan().onUpdate(onGestureEvent)
 
 	return (
 		<View className="flex-1" {...props}>
@@ -128,7 +125,6 @@ export function AlphabetScrollList<T>({
 				getItemType={(item) =>
 					isSectionHeader(item) ? "sectionHeader" : "row"
 				}
-				estimatedItemSize={40}
 			/>
 			{withAlphaFilter !== false && (
 				<View
