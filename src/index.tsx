@@ -14,7 +14,6 @@ import {
 } from "./types"
 
 interface Props {
-	allowFontScaling?: boolean
 	countryCode: CountryCode
 	region?: Region
 	subregion?: Subregion

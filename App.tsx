@@ -41,7 +41,6 @@ export default function App() {
 	const [withModal, setWithModal] = useState<boolean>(true)
 	const [visible, setVisible] = useState<boolean>(false)
 	const [dark, setDark] = useState<boolean>(false)
-	const [allowFontScaling, setFontScaling] = useState<boolean>(true)
 	const [disableNativeModal, setDisableNativeModal] = useState<boolean>(false)
 	const onSelect = (country: Country) => {
 		setCountryCode(country.cca2)
@@ -79,11 +78,6 @@ export default function App() {
 					onValueChange={setWithCallingCodeButton}
 				/>
 				<Option title="Flag" value={withFlag} onValueChange={setWithFlag} />
-				<Option
-					title="Font Scaling"
-					value={allowFontScaling}
-					onValueChange={setFontScaling}
-				/>
 				<Option title="Emoji" value={withEmoji} onValueChange={setWithEmoji} />
 				<Option
 					title="Filter"
@@ -125,7 +119,6 @@ export default function App() {
 				<CountryPicker
 					theme={dark ? DARK_THEME : {}}
 					{...{
-						allowFontScaling,
 						countryCode,
 						withFilter,
 						excludeCountries: ["FR"],
