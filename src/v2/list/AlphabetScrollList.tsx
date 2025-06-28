@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from "react"
+import React, { ReactElement, useMemo, useRef } from "react"
 import { View, Text, TouchableOpacity, LayoutChangeEvent } from "react-native"
 import {
 	Gesture,
@@ -46,7 +46,7 @@ export function AlphabetScrollList<T>({
 	const containerHeightRef = useSharedValue(0)
 
 	// Memoize section titles for fast lookup
-	const sectionTitles = sections.map((s) => s.title)
+	const sectionTitles = useMemo(() => sections.map((s) => s.title), [sections])
 
 	// Flatten sections for FlashList
 	const flatData: (string | T)[] = []
