@@ -15,7 +15,8 @@
 			"image": "./src/assets/images/splash.png"
 		},
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "app.munctl.speakerpicker"
 		},
 		"androidStatusBar": {
 			"backgroundColor": "#000000"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Button, ScrollView, Switch, Text } from "react-native"
 import CountryPicker, {
 	type Country,

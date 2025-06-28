@@ -3,9 +3,8 @@ import React, { memo, useEffect, useRef, useState } from "react"
 import {
 	Dimensions,
 	FlatListProps,
-	PixelRatio,
 	ScrollView,
-	StyleSheet,
+	Text,
 	TouchableOpacity,
 	View,
 } from "react-native"
@@ -14,6 +13,8 @@ import { CountryText } from "./CountryText"
 import { useTheme } from "./CountryTheme"
 import { Flag } from "./Flag"
 import { Country } from "./types"
+import { AlphabetList } from "./v2/list/AlphabetList"
+import SpeakerList from "./v2/list/SpeakerList"
 
 interface LetterProps {
 	letter: string
@@ -30,7 +31,7 @@ const Letter = ({ letter, scrollTo }: LetterProps) => {
 			{...{ activeOpacity }}
 		>
 			<View className="justify-center items-center">
-				<CountryText className="text-center">{letter}</CountryText>
+				<Text className="text-center">{letter}</Text>
 			</View>
 		</TouchableOpacity>
 	)
@@ -121,6 +122,8 @@ const ItemSeparatorComponent = () => {
 const { height } = Dimensions.get("window")
 
 export function CountryList(props: CountryListProps) {
+	return null
+
 	const {
 		data,
 		withAlphaFilter,

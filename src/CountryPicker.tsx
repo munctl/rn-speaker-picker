@@ -9,11 +9,11 @@ import {
 } from "react-native"
 import { useContext } from "./CountryContext"
 import { CountryFilter, CountryFilterProps } from "./CountryFilter"
-import { CountryList } from "./CountryList"
 import { CountryModal } from "./CountryModal"
 import { FlagButton } from "./FlagButton"
 import { HeaderModal } from "./HeaderModal"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
+import SpeakerList from "./v2/list/SpeakerList"
 
 interface State {
 	visible: boolean
@@ -219,16 +219,17 @@ export function CountryPicker(props: CountryPickerProps) {
 						})
 					}
 				/>
-				<CountryList
+				<SpeakerList
+					withCurrency={withCurrency ?? defaults.withCurrency}
+					withFlag={withFlag ?? defaults.withFlag}
+					withEmoji={withEmoji ?? defaults.withEmoji}
+					withCallingCode={withCallingCode ?? defaults.withCallingCode}
 					{...{
 						onSelect: onSelectClose,
 						data: countries,
 						letters: [],
-						withAlphaFilter: withAlphaFilter && filter === "",
-						withCallingCode,
-						withCurrency,
-						withFlag,
-						withEmoji,
+						withAlphaFilter:
+							(withAlphaFilter ?? defaults.withAlphaFilter) && filter === "",
 						filter,
 						filterFocus,
 						flatListProps,
@@ -237,6 +238,20 @@ export function CountryPicker(props: CountryPickerProps) {
 			</CountryModal>
 		</>
 	)
+}
+
+const defaults: {
+	withCallingCode: boolean
+	withEmoji: boolean
+	withFlag: boolean
+	withCurrency: boolean
+	withAlphaFilter: boolean
+} = {
+	withCallingCode: false,
+	withEmoji: false,
+	withFlag: true,
+	withCurrency: false,
+	withAlphaFilter: true,
 }
 
 CountryPicker.defaultProps = {

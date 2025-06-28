@@ -42,3 +42,4 @@ jsconfig.json
 .expo/
 lib/
 web-build/
+ios/

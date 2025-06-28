@@ -23,6 +23,12 @@ importers:
       '@shopify/flash-list':
         specifier: 2.0.0-rc.9
         version: 2.0.0-rc.9(@babel/runtime@7.27.6)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      expo:
+        specifier: ~53.0.13
+        version: 53.0.13(@babel/core@7.27.7)(@expo/metro-runtime@5.0.4(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)))(graphql@15.8.0)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      expo-crypto:
+        specifier: ~14.1.5
+        version: 14.1.5(expo@53.0.13(@babel/core@7.27.7)(@expo/metro-runtime@5.0.4(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)))(graphql@15.8.0)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))
       fuse.js:
         specifier: 3.4.5
         version: 3.4.5
@@ -32,9 +38,18 @@ importers:
       node-emoji:
         specifier: 2.2.0
         version: 2.2.0
+      react:
+        specifier: 19.0.0
+        version: 19.0.0
       react-async-hook:
         specifier: 4.0.0
         version: 4.0.0(react@19.0.0)
+      react-native:
+        specifier: 0.79.4
+        version: 0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)
+      react-native-gesture-handler:
+        specifier: ^2.26.0
+        version: 2.26.0(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       react-native-reanimated:
         specifier: ~3.17.5
         version: 3.17.5(@babel/core@7.27.7)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -67,14 +82,11 @@ importers:
         specifier: 19.1.0
         version: 19.1.0
       babel-jest:
-        specifier: 30.0.2
+        specifier: ^30.0.2
         version: 30.0.2(@babel/core@7.27.7)
       babel-preset-expo:
         specifier: ^13.0.0
         version: 13.0.0(@babel/core@7.27.7)
-      expo:
-        specifier: ^53.0.13
-        version: 53.0.13(@babel/core@7.27.7)(@expo/metro-runtime@5.0.4(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)))(graphql@15.8.0)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       gh-pages:
         specifier: 6.3.0
         version: 6.3.0
@@ -93,15 +105,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.5.14
         version: 0.5.14(prettier@3.6.2)
-      react:
-        specifier: 19.0.0
-        version: 19.0.0
       react-dom:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
-      react-native:
-        specifier: ^0.79.4
-        version: 0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)
       react-native-web:
         specifier: ^0.20.0
         version: 0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -935,6 +941,10 @@ packages:
     peerDependencies:
       react: '>=16.3.0'
 
+  '@egjs/hammerjs@2.0.17':
+    resolution: {integrity: sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==}
+    engines: {node: '>=0.8.0'}
+
   '@expo/cli@0.24.15':
     resolution: {integrity: sha512-RDZS30OSnbXkSPnBXdyPL29KbltjOmegE23bZZDiGV23WOReWcPgRc5U7Fd8eLPhtRjHBKlBpNJMTed5Ntr/uw==}
     hasBin: true
@@ -1411,6 +1421,9 @@ packages:
 
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
+
+  '@types/hammerjs@2.0.46':
+    resolution: {integrity: sha512-ynRvcq6wvqexJ9brDMS4BnBLzmr0e14d6ZJTEShTBWKymQiHwlAyGu0ZPEFI2Fh1U53F7tN9ufClWM5KvqkKOw==}
 
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
@@ -2357,6 +2370,11 @@ packages:
     peerDependencies:
       expo: '*'
       react-native: '*'
+
+  expo-crypto@14.1.5:
+    resolution: {integrity: sha512-ZXJoUMoUeiMNEoSD4itItFFz3cKrit6YJ/BR0hjuwNC+NczbV9rorvhvmeJmrU9O2cFQHhJQQR1fjQnt45Vu4Q==}
+    peerDependencies:
+      expo: '*'
 
   expo-file-system@18.1.10:
     resolution: {integrity: sha512-SyaWg+HitScLuyEeSG9gMSDT0hIxbM9jiZjSBP9l9zMnwZjmQwsusE6+7qGiddxJzdOhTP4YGUfvEzeeS0YL3Q==}
@@ -3916,6 +3934,12 @@ packages:
 
   react-native-edge-to-edge@1.6.0:
     resolution: {integrity: sha512-2WCNdE3Qd6Fwg9+4BpbATUxCLcouF6YRY7K+J36KJ4l3y+tWN6XCqAC4DuoGblAAbb2sLkhEDp4FOlbOIot2Og==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
+  react-native-gesture-handler@2.26.0:
+    resolution: {integrity: sha512-pfE1j9Vzu0qpWj/Aq1IK+cYnougN69mCKvWuq1rdNjH2zs1WIszF0Mum9/oGQTemgjyc/JgiqOOTgwcleAMAGg==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -5771,6 +5795,10 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       react: 19.0.0
 
+  '@egjs/hammerjs@2.0.17':
+    dependencies:
+      '@types/hammerjs': 2.0.46
+
   '@expo/cli@0.24.15(graphql@15.8.0)':
     dependencies:
       '@0no-co/graphql.web': 1.1.2(graphql@15.8.0)
@@ -6876,6 +6904,8 @@ snapshots:
     dependencies:
       '@types/node': 24.0.4
 
+  '@types/hammerjs@2.0.46': {}
+
   '@types/istanbul-lib-coverage@2.0.6': {}
 
   '@types/istanbul-lib-report@3.0.3':
@@ -7917,6 +7947,11 @@ snapshots:
       react-native: 0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)
     transitivePeerDependencies:
       - supports-color
+
+  expo-crypto@14.1.5(expo@53.0.13(@babel/core@7.27.7)(@expo/metro-runtime@5.0.4(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)))(graphql@15.8.0)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)):
+    dependencies:
+      base64-js: 1.5.1
+      expo: 53.0.13(@babel/core@7.27.7)(@expo/metro-runtime@5.0.4(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)))(graphql@15.8.0)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
 
   expo-file-system@18.1.10(expo@53.0.13(@babel/core@7.27.7)(@expo/metro-runtime@5.0.4(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)))(graphql@15.8.0)(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)):
     dependencies:
@@ -9978,6 +10013,14 @@ snapshots:
 
   react-native-edge-to-edge@1.6.0(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
     dependencies:
+      react: 19.0.0
+      react-native: 0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)
+
+  react-native-gesture-handler@2.26.0(react-native@0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      '@egjs/hammerjs': 2.0.17
+      hoist-non-react-statics: 3.3.2
+      invariant: 2.2.4
       react: 19.0.0
       react-native: 0.79.4(@babel/core@7.27.7)(@react-native-community/cli@11.4.1(@babel/core@7.27.7))(@types/react@19.0.14)(react@19.0.0)
 
