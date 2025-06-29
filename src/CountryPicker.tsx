@@ -10,10 +10,11 @@ import {
 import { useContext } from "./CountryContext"
 import { CountryFilter, CountryFilterProps } from "./CountryFilter"
 import { CountryModal } from "./CountryModal"
-import { FlagButton } from "./FlagButton"
+import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
-import SpeakerList from "./v2/list/SpeakerList"
-import { ModalHeader } from "./v2/ModalHeader"
+import SpeakerList from "./v2/modal/list/SpeakerList"
+import { ModalHeader } from "./v2/modal/ModalHeader"
+import { TriggerProps } from "./v2/types/Props"
 
 interface State {
 	visible: boolean
@@ -22,31 +23,9 @@ interface State {
 	filterFocus?: boolean
 }
 
-export interface TriggerProps {
-	wrapperClassName?: string
-	textClassName?: string
-}
-
-interface RenderFlagButtonProps extends ComponentProps<typeof FlagButton> {
-	renderFlagButton?(props: ComponentProps<typeof FlagButton>): ReactNode
-}
-
 interface RenderCountryFilterProps
 	extends ComponentProps<typeof CountryFilter> {
 	renderCountryFilter?(props: ComponentProps<typeof CountryFilter>): ReactNode
-}
-
-/***
- * Render function for the component that opens the picker modal.
- * @param {RenderFlagButtonProps} props - The properties for the ModalTrigger component.
- * @returns {ReactNode} The rendered ModalTrigger component.
- ***/
-function ModalTrigger(props: RenderFlagButtonProps & TriggerProps): ReactNode {
-	return props.renderFlagButton ? (
-		props.renderFlagButton(props)
-	) : (
-		<FlagButton {...props} />
-	)
 }
 
 const renderSearch = (props: RenderCountryFilterProps): ReactNode =>
@@ -67,10 +46,6 @@ interface CountryPickerProps {
 	modalProps?: ModalProps
 	filterProps?: CountryFilterProps
 	flatListProps?: FlatListProps<Country>
-	withCountryNameButton?: boolean
-	withCurrencyButton?: boolean
-	withCallingCodeButton?: boolean
-	withFlagButton?: boolean
 	withCloseButton?: boolean
 	withSearch?: boolean
 	withAlphaFilter?: boolean
@@ -99,12 +74,11 @@ interface CountryPickerProps {
  ***/
 export function CountryPicker(props: CountryPickerProps): ReactNode {
 	const {
-		countryCode,
 		region,
 		trigger,
 		subregion,
 		countryCodes,
-		renderFlagButton: renderButton,
+		countryCode,
 		renderCountryFilter,
 		filterProps,
 		modalProps,
@@ -112,24 +86,18 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 		onSelect,
 		withSearch,
 		withCloseButton,
-		withCountryNameButton,
-		withCallingCodeButton,
-		withCurrencyButton,
-		containerButtonStyle,
 		withAlphaFilter,
 		withCallingCode,
 		withCurrency,
 		withFlag,
 		withTrigger,
 		disableNativeModal,
-		withFlagButton,
 		onClose: handleClose,
 		onOpen: handleOpen,
 		closeButtonImage,
 		closeButtonStyle,
 		closeButtonImageStyle,
 		excludeCountries,
-		placeholder,
 		preferredCountries,
 		additional,
 	} = props
@@ -151,15 +119,11 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 
 	const onOpen = () => {
 		setState({ ...state, visible: true })
-		if (handleOpen) {
-			handleOpen()
-		}
+		if (handleOpen) handleOpen()
 	}
 	const onClose = () => {
 		setState({ ...state, searchTerm: "", visible: false })
-		if (handleClose) {
-			handleClose()
-		}
+		if (handleClose) handleClose()
 	}
 
 	const setSearchTerm = (searchTerm: string) =>
@@ -172,18 +136,6 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 	}
 	const onFocus = () => setState({ ...state, filterFocus: true })
 	const onBlur = () => setState({ ...state, filterFocus: false })
-	const flagProp = {
-		trigger,
-		countryCode,
-		withCountryNameButton,
-		withCallingCodeButton,
-		withCurrencyButton,
-		withFlagButton,
-		renderFlagButton: renderButton,
-		onOpen,
-		containerButtonStyle,
-		placeholder: placeholder || "Select Country",
-	}
 
 	useEffect(() => {
 		let ran = false
@@ -208,7 +160,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 
 	return (
 		<>
-			{withTrigger && <ModalTrigger {...{ ...trigger, ...flagProp }} />}
+			{withTrigger && <ModalTrigger {...{ onOpen, countryCode, ...trigger }} />}
 			<CountryModal
 				withModal={withTrigger}
 				{...{ visible, disableNativeModal, ...modalProps }}

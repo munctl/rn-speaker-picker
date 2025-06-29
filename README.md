@@ -69,4 +69,4 @@ const MyDarkView = () => <CountryPicker theme={DARK_THEME} />
 
 ## License
 
-[MIT](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/LICENSE.md)
+[MIT](LICENSE)

@@ -13,8 +13,8 @@ import { CountryText } from "./CountryText"
 import { useTheme } from "./CountryTheme"
 import { Flag } from "./Flag"
 import { Country } from "./types"
-import { AlphabetList } from "./v2/list/AlphabetList"
-import SpeakerList from "./v2/list/SpeakerList"
+import { AlphabetList } from "./v2/modal/list/AlphabetList"
+import SpeakerList from "./v2/modal/list/SpeakerList"
 
 interface LetterProps {
 	letter: string

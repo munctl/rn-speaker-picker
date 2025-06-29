@@ -15,6 +15,7 @@ import CountryPicker, {
 } from "./src"
 import "./src/assets/global.css"
 import { colorScheme } from "nativewind"
+import { TriggerProps } from "./src/v2/types/Props"
 
 interface OptionProps {
 	title: string
@@ -27,14 +28,26 @@ const Option = ({ value, onValueChange, title }: OptionProps) => (
 		<Text className="dark:text-zinc-100 text-zinc-800 text-lg">{title}</Text>
 	</View>
 )
-
+/***
+ Demo
+ ***/
 export default function App() {
-	const [countryCode, setCountryCode] = useState<CountryCode>("US")
+	const [triggerProps, setTriggerProps] = useState<
+		Required<
+			Pick<
+				TriggerProps,
+				"withFlag" | "withCountryName" | "withCallingCode" | "withCurrency"
+			>
+		>
+	>({
+		withFlag: true,
+		withCountryName: true,
+		withCallingCode: false,
+		withCurrency: false,
+	})
+	const [countryCode, setCountryCode] = useState<CountryCode>()
 	const [country, setCountry] = useState<Country>()
-	const [withCountryNameButton, setWithCountryNameButton] = useState(true)
-	const [withCurrencyButton, setWithCurrencyButton] = useState(false)
-	const [withFlagButton, setWithFlagButton] = useState(true)
-	const [withCallingCodeButton, setWithCallingCodeButton] = useState(false)
+
 	const [withFlag, setWithFlag] = useState(true)
 	const [withSearch, setWithSearch] = useState(true)
 	const [withCloseButton, setWithCloseButton] = useState(true)
@@ -49,7 +62,6 @@ export default function App() {
 		setCountryCode(country.cca2)
 		setCountry(country)
 	}
-	const switchVisible = () => setVisible(!visible)
 
 	useEffect(() => {
 		colorScheme.set(dark ? "dark" : "light")
@@ -67,23 +79,43 @@ export default function App() {
 					</Text>
 					<Option
 						title="Flag"
-						value={withFlagButton}
-						onValueChange={setWithFlagButton}
+						value={triggerProps.withFlag}
+						onValueChange={(v) => {
+							setTriggerProps((prevState) => ({
+								...prevState,
+								withFlag: v,
+							}))
+						}}
 					/>
 					<Option
 						title="Country Name"
-						value={withCountryNameButton}
-						onValueChange={setWithCountryNameButton}
+						value={triggerProps.withCountryName}
+						onValueChange={(v) => {
+							setTriggerProps((prevState) => ({
+								...prevState,
+								withCountryName: v,
+							}))
+						}}
 					/>
 					<Option
 						title="Currency"
-						value={withCurrencyButton}
-						onValueChange={setWithCurrencyButton}
+						value={triggerProps.withCurrency}
+						onValueChange={(v) => {
+							setTriggerProps((prevState) => ({
+								...prevState,
+								withCurrency: v,
+							}))
+						}}
 					/>
 					<Option
 						title="Calling Code"
-						value={withCallingCodeButton}
-						onValueChange={setWithCallingCodeButton}
+						value={triggerProps.withCallingCode}
+						onValueChange={(v) => {
+							setTriggerProps((prevState) => ({
+								...prevState,
+								withCallingCode: v,
+							}))
+						}}
 					/>
 				</View>
 				<View className="flex gap-y-2 mb-4">
@@ -136,6 +168,7 @@ export default function App() {
 				<CountryPicker
 					trigger={{
 						wrapperClassName: "mx-auto",
+						...triggerProps,
 					}}
 					theme={dark ? DARK_THEME : {}}
 					{...{
@@ -143,14 +176,10 @@ export default function App() {
 						withSearch,
 						excludeCountries: ["FR"],
 						withFlag,
-						withCurrencyButton,
-						withCallingCodeButton,
-						withCountryNameButton,
 						withAlphaFilter,
 						withCallingCode,
 						withCurrency,
 						withTrigger,
-						withFlagButton,
 						withCloseButton,
 						onSelect,
 						disableNativeModal,
@@ -168,7 +197,7 @@ export default function App() {
 				</Text>
 				<TouchableOpacity
 					className="bg-zinc-200 p-2 rounded-md"
-					onPress={switchVisible}
+					onPress={() => setVisible((prev) => !prev)}
 				>
 					<Text className="text-xl text-center">
 						Tap to open the modal externally via useState.

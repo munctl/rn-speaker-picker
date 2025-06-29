@@ -43,3 +43,4 @@ jsconfig.json
 lib/
 web-build/
 ios/
+android/

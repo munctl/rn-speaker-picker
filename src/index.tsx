@@ -2,9 +2,8 @@ import { ReactNode } from "react"
 import { FlatListProps, ModalProps, StyleProp, ViewStyle } from "react-native"
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext"
 import { CountryFilterProps } from "./CountryFilter"
-import { CountryPicker, TriggerProps } from "./CountryPicker"
+import { CountryPicker } from "./CountryPicker"
 import { DEFAULT_THEME, Theme, ThemeProvider } from "./CountryTheme"
-import { FlagButtonProps } from "./FlagButton"
 import {
 	Country,
 	CountryCode,
@@ -12,10 +11,11 @@ import {
 	Subregion,
 	TranslationLanguageCode,
 } from "./types"
+import { TriggerProps } from "./v2/types/Props"
 
 interface Props {
 	trigger?: TriggerProps
-	countryCode: CountryCode
+	countryCode?: CountryCode
 	region?: Region
 	subregion?: Subregion
 	countryCodes?: CountryCode[]
@@ -43,26 +43,25 @@ interface Props {
 	visible?: boolean
 	containerButtonStyle?: StyleProp<ViewStyle>
 	additional?: Country[]
-	renderFlagButton?(props: FlagButtonProps): ReactNode
 	renderCountryFilter?(props: CountryFilterProps): ReactNode
 	onSelect(country: Country): void
 	onOpen?(): void
 	onClose?(): void
 }
 
-export default function Main({ theme, translation, ...props }: Props) {
+export default function Main({
+	theme,
+	translation,
+	onSelect = () => {},
+	...props
+}: Props) {
 	return (
 		<ThemeProvider theme={{ ...DEFAULT_THEME, ...theme }}>
 			<CountryProvider value={{ ...DEFAULT_COUNTRY_CONTEXT, translation }}>
-				<CountryPicker {...props} />
+				<CountryPicker {...{ onSelect, ...props }} />
 			</CountryProvider>
 		</ThemeProvider>
 	)
-}
-
-Main.defaultProps = {
-	onSelect: () => {},
-	withEmoji: true,
 }
 
 export { CountryFilter } from "./CountryFilter"
@@ -75,6 +74,6 @@ export {
 } from "./CountryService"
 export { DARK_THEME, DEFAULT_THEME } from "./CountryTheme"
 export { Flag } from "./Flag"
-export { FlagButton } from "./FlagButton"
-export { ModalHeader } from "./v2/ModalHeader"
+export { FlagButton } from "./v2/trigger/FlagButton"
+export { ModalHeader } from "./v2/modal/ModalHeader"
 export * from "./types"

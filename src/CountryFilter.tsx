@@ -11,6 +11,7 @@ export const CountryFilter = (props: CountryFilterProps) => {
 			autoCorrect={false}
 			placeholderTextColor={filterPlaceholderTextColor}
 			className="h-12 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 px-2 flex-grow"
+			placeholder="Enter a name..."
 			{...props}
 		/>
 	)

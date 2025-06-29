@@ -1,26 +1,33 @@
 {
-	"expo": {
-		"name": "speaker-picker",
-		"description": "Expo Speaker Picker",
-		"slug": "speaker-picker",
-		"sdkVersion": "53.0.0",
-		"platforms": ["ios", "android", "web"],
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./src/assets/images/icon.png",
-		"userInterfaceStyle": "automatic",
-		"web": {
-			"bundler": "metro"
-		},
-		"splash": {
-			"image": "./src/assets/images/splash.png"
-		},
-		"ios": {
-			"supportsTablet": true,
-			"bundleIdentifier": "app.munctl.speakerpicker"
-		},
-		"androidStatusBar": {
-			"backgroundColor": "#000000"
-		}
-	}
+  "expo": {
+    "name": "speaker-picker",
+    "description": "Expo Speaker Picker",
+    "slug": "speaker-picker",
+    "sdkVersion": "53.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
+    "web": {
+      "bundler": "metro"
+    },
+    "splash": {
+      "image": "./src/assets/images/splash.png"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.munctl.speakerpicker"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#000000"
+    },
+    "android": {
+      "package": "app.munctl.speakerpicker"
+    }
+  }
 }

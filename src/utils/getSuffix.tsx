@@ -3,6 +3,8 @@ interface GetSuffixProps {
 	withCurrency: boolean
 	callingCode: string
 	currency: string
+
+	parentheses?: boolean
 }
 
 /***
@@ -19,15 +21,20 @@ export default function getSuffix({
 	withCurrency,
 	callingCode,
 	currency,
+
+	parentheses = true,
 }: GetSuffixProps): string {
+	const p = (i: string): string => (parentheses ? `(${i})` : i)
+
 	if (
 		withCurrency &&
-		currency.length > 0 &&
+		currency?.length > 0 &&
 		withCallingCode &&
-		callingCode.length > 0
+		callingCode?.length > 0
 	)
-		return `(+${callingCode}, ${currency})`
-	if (withCurrency && currency.length > 0) return `(${currency})`
-	if (withCallingCode && callingCode.length > 0) return `(+${callingCode})`
+		return p(`+${callingCode}, ${currency}`)
+	if (withCurrency && currency?.length > 0) return p(currency)
+	if (withCallingCode && callingCode?.length > 0) return p(`+${callingCode}`)
+
 	return ""
 }
