@@ -1,10 +1,15 @@
-import { FlatListProps, Text, TouchableOpacity, View } from "react-native"
+import { FlatListProps, View } from "react-native"
 import { Country } from "../../types"
 import { AlphabetScrollList } from "./AlphabetScrollList"
+import React from "react"
+import ListItem from "./ListItem"
+import ListHeader from "./ListHeader"
+import { useContext } from "../../CountryContext"
+import * as assert from "node:assert"
 
 interface SpeakerListProps {
 	data: Country[]
-	filter?: string
+	searchTerm?: string
 	filterFocus?: boolean
 	withFlag: boolean
 	withEmoji: boolean
@@ -15,41 +20,40 @@ interface SpeakerListProps {
 	onSelect(country: Country): void
 }
 
-export default function SpeakerList(props: SpeakerListProps) {
-	const {
-		data,
-		withAlphaFilter,
-		withEmoji,
-		withFlag,
-		withCallingCode,
-		withCurrency,
-		onSelect,
-		filter,
-		flatListProps,
-		filterFocus,
-	} = props
-
+export default function SpeakerList({
+	data,
+	searchTerm,
+	withAlphaFilter,
+	withFlag,
+	withEmoji,
+	withCurrency,
+	withCallingCode,
+	onSelect,
+}: SpeakerListProps) {
+	const { search } = useContext()
 	return (
 		<View className="flex-1 flex-row content-between mx-1">
 			<View className="grow">
 				<AlphabetScrollList<Country>
 					{...{ withAlphaFilter }}
 					getItemKey={(item) => item.name.toString()}
-					renderSectionHeader={(item) => (
-						<Text className="mb-2 p-1 bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 rounded-md font-bold">
-							{item}
-						</Text>
-					)}
+					renderSectionHeader={(item) => <ListHeader {...{ item }} />}
 					renderItem={(item) => (
-						<TouchableOpacity onPress={() => onSelect(item)}>
-							<Text className="py-2 px-1 mb-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 rounded-md">
-								{item.name.toString()}
-							</Text>
-						</TouchableOpacity>
+						<ListItem
+							{...{
+								onSelect,
+								withCallingCode,
+								withCurrency,
+								withEmoji,
+								withFlag,
+							}}
+							country={item}
+						/>
 					)}
 					sections={(() => {
 						const groups: Record<string, Country[]> = {}
-						data.forEach((d) => {
+
+						search(searchTerm, data).forEach((d) => {
 							const name = d.name.toString()
 							if (!name) return
 

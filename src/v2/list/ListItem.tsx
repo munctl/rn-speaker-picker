@@ -26,17 +26,21 @@ export default function ListItem(props: ListItemProps) {
 
 	return (
 		<TouchableOpacity
-			className="bg-zinc-200 dark:bg-zinc-800 px-2 my-1 rounded-md"
+			className="bg-zinc-100 dark:bg-zinc-800 px-1 py-4 mb-2 rounded-md"
 			key={country.cca2}
 			testID={`country-selector-${country.cca2}`}
 			onPress={() => onSelect(country)}
 		>
-			<View className="py-4 flex flex-row items-center gap-2">
+			<View className="flex flex-row items-center gap-2">
 				{withFlag && (
-					<Flag {...{ withEmoji, countryCode: country.cca2, flagSize: 30 }} />
+					<Flag {...{ withEmoji }} countryCode={country.cca2} flagSize={30} />
 				)}
 				<View>
-					<Text numberOfLines={2} ellipsizeMode="tail" className="">
+					<Text
+						numberOfLines={2}
+						ellipsizeMode="tail"
+						className="text-zinc-800 dark:text-zinc-100"
+					>
 						{countryName} {suffix}
 					</Text>
 				</View>

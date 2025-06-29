@@ -25,23 +25,21 @@ const Option = ({ value, onValueChange, title }: OptionProps) => (
 export default function App() {
 	const [countryCode, setCountryCode] = useState<CountryCode>("US")
 	const [country, setCountry] = useState<Country>()
-	const [withCountryNameButton, setWithCountryNameButton] =
-		useState<boolean>(true)
-	const [withCurrencyButton, setWithCurrencyButton] = useState<boolean>(false)
-	const [withFlagButton, setWithFlagButton] = useState<boolean>(true)
-	const [withCallingCodeButton, setWithCallingCodeButton] =
-		useState<boolean>(false)
-	const [withFlag, setWithFlag] = useState<boolean>(true)
-	const [withEmoji, setWithEmoji] = useState<boolean>(false)
-	const [withFilter, setWithFilter] = useState<boolean>(true)
-	const [withCloseButton, setWithCloseButton] = useState<boolean>(true)
-	const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
-	const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
-	const [withCurrency, setWithCurrency] = useState<boolean>(false)
-	const [withModal, setWithModal] = useState<boolean>(true)
-	const [visible, setVisible] = useState<boolean>(false)
-	const [dark, setDark] = useState<boolean>(false)
-	const [disableNativeModal, setDisableNativeModal] = useState<boolean>(false)
+	const [withCountryNameButton, setWithCountryNameButton] = useState(true)
+	const [withCurrencyButton, setWithCurrencyButton] = useState(false)
+	const [withFlagButton, setWithFlagButton] = useState(true)
+	const [withCallingCodeButton, setWithCallingCodeButton] = useState(false)
+	const [withFlag, setWithFlag] = useState(true)
+	const [withEmoji, setWithEmoji] = useState(false)
+	const [withSearch, setWithSearch] = useState(true)
+	const [withCloseButton, setWithCloseButton] = useState(true)
+	const [withAlphaFilter, setWithAlphaFilter] = useState(false)
+	const [withCallingCode, setWithCallingCode] = useState(false)
+	const [withCurrency, setWithCurrency] = useState(false)
+	const [withModal, setWithModal] = useState(true)
+	const [visible, setVisible] = useState(false)
+	const [dark, setDark] = useState(false)
+	const [disableNativeModal, setDisableNativeModal] = useState(false)
 	const onSelect = (country: Country) => {
 		setCountryCode(country.cca2)
 		setCountry(country)
@@ -79,9 +77,9 @@ export default function App() {
 				<Option title="Flag" value={withFlag} onValueChange={setWithFlag} />
 				<Option title="Emoji" value={withEmoji} onValueChange={setWithEmoji} />
 				<Option
-					title="Filter"
-					value={withFilter}
-					onValueChange={setWithFilter}
+					title="Search Bar"
+					value={withSearch}
+					onValueChange={setWithSearch}
 				/>
 				<Option
 					title="Close Button"
@@ -119,7 +117,7 @@ export default function App() {
 					theme={dark ? DARK_THEME : {}}
 					{...{
 						countryCode,
-						withFilter,
+						withSearch,
 						excludeCountries: ["FR"],
 						withFlag,
 						withCurrencyButton,

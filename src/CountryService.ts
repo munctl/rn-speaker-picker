@@ -8,7 +8,7 @@ import {
 	TranslationLanguageCode,
 	TranslationLanguageCodeMap,
 } from "./types"
-import Fuse from "fuse.js"
+import Fuse, { IFuseOptions } from "fuse.js"
 
 const imageJsonUrl =
 	"https://xcarpentier.github.io/react-native-country-picker-modal/countries/"
@@ -195,10 +195,11 @@ const DEFAULT_FUSE_OPTION = {
 	keys: ["name", "cca2", "callingCode"],
 }
 let fuse: Fuse<Country>
+
 export const search = (
-	filter: string = "",
+	term: string = "",
 	data: Country[] = [],
-	options: Fuse.FuseOptions<Country> = DEFAULT_FUSE_OPTION,
+	options: IFuseOptions<Country> = DEFAULT_FUSE_OPTION,
 ) => {
 	if (data.length === 0) {
 		return []
@@ -206,16 +207,16 @@ export const search = (
 	if (!fuse) {
 		fuse = new Fuse<Country>(data, options)
 	}
-	if (filter && filter !== "") {
-		return fuse.search(filter)
+	if (term && term.length > 0) {
+		return fuse.search(term).map((r) => r.item)
 	} else {
 		return data
 	}
 }
-const uniq = (arr: string[]) => Array.from(new Set(arr))
+const unique = (arr: string[]) => Array.from(new Set(arr))
 
 export const getLetters = (countries: Country[]) => {
-	return uniq(
+	return unique(
 		countries
 			.map((country: Country) =>
 				(country.name as string).slice(0, 1).toLocaleUpperCase(),

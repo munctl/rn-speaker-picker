@@ -12,6 +12,7 @@ import { Flag } from "./Flag"
 import { useContext } from "./CountryContext"
 import { CountryText } from "./CountryText"
 import { useTheme } from "./CountryTheme"
+import getSuffix from "./utils/getSuffix"
 
 const styles = StyleSheet.create({
 	container: {
@@ -74,13 +75,6 @@ const FlagWithSomething = memo(
 			withCallingCodeButton,
 		])
 
-		function getSuffix() {
-			if (!withCallingCodeButton && !withCurrencyButton) return ""
-			if (withCurrencyButton && withCallingCodeButton)
-				return `(+${callingCode}, ${currency})`
-			return withCallingCodeButton ? `(+${callingCode})` : `(${currency})`
-		}
-
 		return (
 			<View className="flex-row flex-wrap items-center">
 				{countryCode ? (
@@ -94,9 +88,13 @@ const FlagWithSomething = memo(
 						{countryName + " "}
 					</FlagText>
 				) : null}
-				{getSuffix() ? (
-					<FlagText allowFontScaling={allowFontScaling}>{getSuffix()}</FlagText>
-				) : null}
+				<FlagText allowFontScaling={allowFontScaling}>
+					{getSuffix({
+						...{ callingCode, currency },
+						withCurrency: withCurrencyButton!,
+						withCallingCode: withCallingCodeButton!,
+					})}
+				</FlagText>
 			</View>
 		)
 	},

@@ -18,7 +18,7 @@ import { HeaderModal } from "./HeaderModal"
 interface State {
 	visible: boolean
 	countries: Country[]
-	filter?: string
+	searchTerm?: string
 	filterFocus?: boolean
 }
 
@@ -46,7 +46,6 @@ const renderFilter = (props: RenderCountryFilterProps): ReactNode =>
 	)
 
 interface CountryPickerProps {
-	allowFontScaling?: boolean
 	countryCode?: CountryCode
 	region?: Region
 	subregion?: Subregion
@@ -62,7 +61,7 @@ interface CountryPickerProps {
 	withCallingCodeButton?: boolean
 	withFlagButton?: boolean
 	withCloseButton?: boolean
-	withFilter?: boolean
+	withSearch?: boolean
 	withAlphaFilter?: boolean
 	withCallingCode?: boolean
 	withCurrency?: boolean
@@ -84,7 +83,6 @@ interface CountryPickerProps {
 
 export function CountryPicker(props: CountryPickerProps) {
 	const {
-		allowFontScaling,
 		countryCode,
 		region,
 		subregion,
@@ -96,7 +94,7 @@ export function CountryPicker(props: CountryPickerProps) {
 		flatListProps,
 		onSelect,
 		withEmoji,
-		withFilter,
+		withSearch,
 		withCloseButton,
 		withCountryNameButton,
 		withCallingCodeButton,
@@ -121,11 +119,11 @@ export function CountryPicker(props: CountryPickerProps) {
 	const [state, setState] = useState<State>({
 		visible: props.visible || false,
 		countries: [],
-		filter: "",
+		searchTerm: "",
 		filterFocus: false,
 	})
 	const { translation, getCountriesAsync } = useContext()
-	const { visible, filter, countries, filterFocus } = state
+	const { visible, searchTerm, countries, filterFocus } = state
 
 	useEffect(() => {
 		if (state.visible !== props.visible) {
@@ -140,13 +138,14 @@ export function CountryPicker(props: CountryPickerProps) {
 		}
 	}
 	const onClose = () => {
-		setState({ ...state, filter: "", visible: false })
+		setState({ ...state, searchTerm: "", visible: false })
 		if (handleClose) {
 			handleClose()
 		}
 	}
 
-	const setFilter = (filter: string) => setState({ ...state, filter })
+	const setSearchTerm = (searchTerm: string) =>
+		setState({ ...state, searchTerm })
 	const setCountries = (countries: Country[]) =>
 		setState({ ...state, countries })
 	const onSelectClose = (country: Country) => {
@@ -156,7 +155,6 @@ export function CountryPicker(props: CountryPickerProps) {
 	const onFocus = () => setState({ ...state, filterFocus: true })
 	const onBlur = () => setState({ ...state, filterFocus: false })
 	const flagProp = {
-		allowFontScaling,
 		countryCode,
 		withEmoji,
 		withCountryNameButton,
@@ -198,8 +196,8 @@ export function CountryPicker(props: CountryPickerProps) {
 				onDismiss={onClose}
 			>
 				<HeaderModal
+					withFilter={withSearch}
 					{...{
-						withFilter,
 						onClose,
 						closeButtonImage,
 						closeButtonImageStyle,
@@ -209,10 +207,9 @@ export function CountryPicker(props: CountryPickerProps) {
 					renderFilter={(props) =>
 						renderFilter({
 							...props,
-							allowFontScaling,
 							renderCountryFilter,
-							onChangeText: setFilter,
-							value: filter,
+							onChangeText: setSearchTerm,
+							value: searchTerm,
 							onFocus,
 							onBlur,
 							...filterProps,
@@ -229,8 +226,9 @@ export function CountryPicker(props: CountryPickerProps) {
 						data: countries,
 						letters: [],
 						withAlphaFilter:
-							(withAlphaFilter ?? defaults.withAlphaFilter) && filter === "",
-						filter,
+							(withAlphaFilter ?? defaults.withAlphaFilter) &&
+							searchTerm?.length === 0,
+						searchTerm,
 						filterFocus,
 						flatListProps,
 					}}

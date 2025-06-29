@@ -11,7 +11,14 @@ export default function getSuffix({
 	callingCode,
 	currency,
 }: GetSuffixProps) {
-	if (!withCallingCode && !withCurrency) return ""
-	if (withCurrency && withCallingCode) return `(+${callingCode}, ${currency})`
-	return withCallingCode ? `(+${callingCode})` : `(${currency})`
+	if (
+		withCurrency &&
+		currency.length > 0 &&
+		withCallingCode &&
+		callingCode.length > 0
+	)
+		return `(+${callingCode}, ${currency})`
+	if (withCurrency && currency.length > 0) return `(${currency})`
+	if (withCallingCode && callingCode.length > 0) return `(${callingCode})`
+	return ""
 }
