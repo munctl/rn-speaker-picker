@@ -7,9 +7,9 @@ A fork of [react-native-country-picker-modal](https://github.com/xcarpentier/rea
 * Improved alpha filter
 * Visual redesign
 
-| iOS                                                                                               | Android                                                                                           | Web                                                                                               |
-|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| <img  src="https://media.giphy.com/media/cKmlP4Ue5pUrH0DQLi/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/Q7SDti4eARGx2CQIGE/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/gKl3z3c7sVVL7KSSh8/giphy.gif" width="250" height="400"/> |
+| iOS                                                                                                                           | Android                                                                                           | Web                                                                                               |
+|-------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| <video src="https://github.com/munctl/rn-speaker-picker/raw/refs/heads/master/media/iOS-Demo.mp4" width="200" height="400"/> | <img  src="https://media.giphy.com/media/Q7SDti4eARGx2CQIGE/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/gKl3z3c7sVVL7KSSh8/giphy.gif" width="250" height="400"/> |
 
 
 
