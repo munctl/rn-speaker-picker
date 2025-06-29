@@ -2,94 +2,20 @@
 A fork of [react-native-country-picker-modal](https://github.com/xcarpentier/react-native-country-picker-modal) with tweaks for use in [MUNctl](https://munctl.app/).
 
 ## Tweaks
-* Add custom entries at runtime
-* Visual changes
+* Upgraded dependencies
+* Add custom countries/speakers at runtime
+* Improved alpha filter
+* Visual redesign
 
 | iOS                                                                                               | Android                                                                                           | Web                                                                                               |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
 | <img  src="https://media.giphy.com/media/cKmlP4Ue5pUrH0DQLi/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/Q7SDti4eARGx2CQIGE/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/gKl3z3c7sVVL7KSSh8/giphy.gif" width="250" height="400"/> |
 
 
 
-## Basic Usage
+## Example
 
-For more complete example, open [App.tsx](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/App.tsx)
-
-```tsx
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, PixelRatio, Switch } from 'react-native'
-import CountryPicker from 'react-native-country-picker-modal'
-import { CountryCode, Country } from './src/types'
-
-const styles = StyleSheet.create({
-  // ...
-})
-
-export default function App() {
-  const [countryCode, setCountryCode] = useState<CountryCode>('FR')
-  const [country, setCountry] = useState<Country>(null)
-  const [withCountryNameButton, setWithCountryNameButton] = useState<boolean>(
-    false,
-  )
-  const [withFlag, setWithFlag] = useState<boolean>(true)
-  const [withEmoji, setWithEmoji] = useState<boolean>(true)
-  const [withFilter, setWithFilter] = useState<boolean>(true)
-  const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
-  const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
-  const onSelect = (country: Country) => {
-    setCountryCode(country.cca2)
-    setCountry(country)
-  }
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to Country Picker !</Text>
-      <Option
-        title='With country name on button'
-        value={withCountryNameButton}
-        onValueChange={setWithCountryNameButton}
-      />
-      <Option title='With flag' value={withFlag} onValueChange={setWithFlag} />
-      <Option
-        title='With emoji'
-        value={withEmoji}
-        onValueChange={setWithEmoji}
-      />
-      <Option
-        title='With filter'
-        value={withFilter}
-        onValueChange={setWithFilter}
-      />
-      <Option
-        title='With calling code'
-        value={withCallingCode}
-        onValueChange={setWithCallingCode}
-      />
-      <Option
-        title='With alpha filter code'
-        value={withAlphaFilter}
-        onValueChange={setWithAlphaFilter}
-      />
-      <CountryPicker
-        {...{
-          countryCode,
-          withFilter,
-          withFlag,
-          withCountryNameButton,
-          withAlphaFilter,
-          withCallingCode,
-          withEmoji,
-          onSelect,
-        }}
-        visible
-      />
-      <Text style={styles.instructions}>Press on the flag to open modal</Text>
-      {country !== null && (
-        <Text style={styles.data}>{JSON.stringify(country, null, 2)}</Text>
-      )}
-    </View>
-  )
-}
-```
+For an example, open [App.tsx](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/App.tsx)
 
 ## Props
 
@@ -129,7 +55,7 @@ export default function App() {
 
 ## Dark theme example
 
-<p align="center">
+<p style="text-align: center">
     <img alt="react-native-country-picker-modal-dark" src="https://user-images.githubusercontent.com/2692166/40585272-094f817a-61b0-11e8-9668-abff0aeddb0e.png" width=150>
 </p>
 

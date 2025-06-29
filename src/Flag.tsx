@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		width: 30,
-		marginRight: 10,
 	},
 	emojiFlag: {
 		alignItems: "center",
@@ -60,7 +59,7 @@ const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
 	)
 })
 
-const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
+/*const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
 	const { getEmojiFlagAsync } = useContext()
 	const asyncResult = useAsync(getEmojiFlagAsync, [countryCode])
 
@@ -75,23 +74,20 @@ const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
 			<Emoji {...{ name: asyncResult.result! }} />
 		</Text>
 	)
-})
+})*/
 
-export const Flag = ({
+export function Flag({
 	countryCode,
-	withEmoji,
 	withFlagButton,
 	flagSize,
-}: FlagType) =>
-	withFlagButton ? (
-		<View style={styles.container}>
-			{withEmoji ? (
-				<EmojiFlag {...{ countryCode, flagSize }} />
-			) : (
-				<ImageFlag {...{ countryCode, flagSize }} />
-			)}
+	...props
+}: FlagType) {
+	return (
+		<View style={styles.container} {...props}>
+			<ImageFlag {...{ countryCode, flagSize }} />
 		</View>
-	) : null
+	)
+}
 
 Flag.defaultProps = {
 	withEmoji: true,

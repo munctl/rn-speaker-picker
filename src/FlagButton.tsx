@@ -13,6 +13,7 @@ import { useContext } from "./CountryContext"
 import { CountryText } from "./CountryText"
 import { useTheme } from "./CountryTheme"
 import getSuffix from "./utils/getSuffix"
+import { TriggerProps } from "./CountryPicker"
 
 const styles = StyleSheet.create({
 	container: {
@@ -37,7 +38,7 @@ type FlagWithSomethingProp = Pick<
 	| "withCallingCodeButton"
 	| "withFlagButton"
 	| "placeholder"
-> & { flagSize: number; allowFontScaling?: boolean }
+> & { flagSize: number; allowFontScaling?: boolean; textClassName?: string }
 
 const FlagText = (props: TextProps & { children: ReactNode }) => (
 	<CountryText {...props} style={styles.something} />
@@ -54,6 +55,8 @@ const FlagWithSomething = memo(
 		withFlagButton,
 		flagSize,
 		placeholder,
+		textClassName,
+		...props
 	}: FlagWithSomethingProp) => {
 		const { translation, getCountryInfoAsync } = useContext()
 		const [state, setState] = useState({
@@ -76,7 +79,7 @@ const FlagWithSomething = memo(
 		])
 
 		return (
-			<View className="flex-row flex-wrap items-center">
+			<View className="flex-row flex-wrap items-center gap-2">
 				{countryCode ? (
 					<Flag {...{ withEmoji, countryCode, withFlagButton, flagSize }} />
 				) : (
@@ -84,11 +87,14 @@ const FlagWithSomething = memo(
 				)}
 
 				{withCountryNameButton && countryName ? (
-					<FlagText allowFontScaling={allowFontScaling}>
+					<FlagText
+						allowFontScaling={allowFontScaling}
+						className={textClassName}
+					>
 						{countryName + " "}
 					</FlagText>
 				) : null}
-				<FlagText allowFontScaling={allowFontScaling}>
+				<FlagText allowFontScaling={allowFontScaling} className={textClassName}>
 					{getSuffix({
 						...{ callingCode, currency },
 						withCurrency: withCurrencyButton!,
@@ -124,10 +130,18 @@ export function FlagButton({
 	containerButtonStyle,
 	onOpen,
 	placeholder,
-}: FlagButtonProps) {
+	textClassName,
+	wrapperClassName,
+	...props
+}: FlagButtonProps & TriggerProps) {
 	const { flagSizeButton: flagSize } = useTheme()
 	return (
-		<TouchableOpacity activeOpacity={0.7} onPress={onOpen}>
+		<TouchableOpacity
+			activeOpacity={0.7}
+			onPress={onOpen}
+			{...props}
+			className={wrapperClassName}
+		>
 			<View
 				style={[
 					styles.container,
@@ -146,6 +160,7 @@ export function FlagButton({
 						withFlagButton,
 						flagSize: flagSize!,
 						placeholder,
+						textClassName,
 					}}
 				/>
 			</View>

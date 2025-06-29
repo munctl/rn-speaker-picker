@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { FlatListProps, ModalProps, StyleProp, ViewStyle } from "react-native"
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext"
 import { CountryFilterProps } from "./CountryFilter"
-import { CountryPicker } from "./CountryPicker"
+import { CountryPicker, TriggerProps } from "./CountryPicker"
 import { DEFAULT_THEME, Theme, ThemeProvider } from "./CountryTheme"
 import { FlagButtonProps } from "./FlagButton"
 import {
@@ -14,6 +14,7 @@ import {
 } from "./types"
 
 interface Props {
+	trigger?: TriggerProps
 	countryCode: CountryCode
 	region?: Region
 	subregion?: Subregion
@@ -41,6 +42,7 @@ interface Props {
 	disableNativeModal?: boolean
 	visible?: boolean
 	containerButtonStyle?: StyleProp<ViewStyle>
+	additional?: Country[]
 	renderFlagButton?(props: FlagButtonProps): ReactNode
 	renderCountryFilter?(props: CountryFilterProps): ReactNode
 	onSelect(country: Country): void
@@ -74,5 +76,5 @@ export {
 export { DARK_THEME, DEFAULT_THEME } from "./CountryTheme"
 export { Flag } from "./Flag"
 export { FlagButton } from "./FlagButton"
-export { HeaderModal } from "./HeaderModal"
+export { ModalHeader } from "./v2/ModalHeader"
 export * from "./types"

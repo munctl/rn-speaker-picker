@@ -13,13 +13,18 @@ import { CountryModal } from "./CountryModal"
 import { FlagButton } from "./FlagButton"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
 import SpeakerList from "./v2/list/SpeakerList"
-import { HeaderModal } from "./HeaderModal"
+import { ModalHeader } from "./v2/ModalHeader"
 
 interface State {
 	visible: boolean
 	countries: Country[]
 	searchTerm?: string
 	filterFocus?: boolean
+}
+
+export interface TriggerProps {
+	wrapperClassName?: string
+	textClassName?: string
 }
 
 interface RenderFlagButtonProps extends ComponentProps<typeof FlagButton> {
@@ -31,14 +36,20 @@ interface RenderCountryFilterProps
 	renderCountryFilter?(props: ComponentProps<typeof CountryFilter>): ReactNode
 }
 
-const renderFlagButton = (props: RenderFlagButtonProps): ReactNode =>
-	props.renderFlagButton ? (
+/***
+ * Render function for the component that opens the picker modal.
+ * @param {RenderFlagButtonProps} props - The properties for the ModalTrigger component.
+ * @returns {ReactNode} The rendered ModalTrigger component.
+ ***/
+function ModalTrigger(props: RenderFlagButtonProps & TriggerProps): ReactNode {
+	return props.renderFlagButton ? (
 		props.renderFlagButton(props)
 	) : (
 		<FlagButton {...props} />
 	)
+}
 
-const renderFilter = (props: RenderCountryFilterProps): ReactNode =>
+const renderSearch = (props: RenderCountryFilterProps): ReactNode =>
 	props.renderCountryFilter ? (
 		props.renderCountryFilter(props)
 	) : (
@@ -46,6 +57,7 @@ const renderFilter = (props: RenderCountryFilterProps): ReactNode =>
 	)
 
 interface CountryPickerProps {
+	trigger?: TriggerProps
 	countryCode?: CountryCode
 	region?: Region
 	subregion?: Subregion
@@ -55,7 +67,6 @@ interface CountryPickerProps {
 	modalProps?: ModalProps
 	filterProps?: CountryFilterProps
 	flatListProps?: FlatListProps<Country>
-	withEmoji?: boolean
 	withCountryNameButton?: boolean
 	withCurrencyButton?: boolean
 	withCallingCodeButton?: boolean
@@ -66,10 +77,11 @@ interface CountryPickerProps {
 	withCallingCode?: boolean
 	withCurrency?: boolean
 	withFlag?: boolean
-	withModal?: boolean
+	withTrigger?: boolean
 	disableNativeModal?: boolean
 	visible?: boolean
 	placeholder?: string
+	additional?: Country[]
 	containerButtonStyle?: StyleProp<ViewStyle>
 	closeButtonImage?: ImageSourcePropType
 	closeButtonStyle?: StyleProp<ViewStyle>
@@ -80,11 +92,16 @@ interface CountryPickerProps {
 	onOpen?(): void
 	onClose?(): void
 }
-
-export function CountryPicker(props: CountryPickerProps) {
+/***
+ * The main CountryPicker component that allows users to select a country from a modal.
+ * @param {CountryPickerProps} props - The properties for the CountryPicker component.
+ * @returns {ReactNode} The rendered CountryPicker component.
+ ***/
+export function CountryPicker(props: CountryPickerProps): ReactNode {
 	const {
 		countryCode,
 		region,
+		trigger,
 		subregion,
 		countryCodes,
 		renderFlagButton: renderButton,
@@ -93,7 +110,6 @@ export function CountryPicker(props: CountryPickerProps) {
 		modalProps,
 		flatListProps,
 		onSelect,
-		withEmoji,
 		withSearch,
 		withCloseButton,
 		withCountryNameButton,
@@ -104,7 +120,7 @@ export function CountryPicker(props: CountryPickerProps) {
 		withCallingCode,
 		withCurrency,
 		withFlag,
-		withModal,
+		withTrigger,
 		disableNativeModal,
 		withFlagButton,
 		onClose: handleClose,
@@ -115,7 +131,9 @@ export function CountryPicker(props: CountryPickerProps) {
 		excludeCountries,
 		placeholder,
 		preferredCountries,
+		additional,
 	} = props
+
 	const [state, setState] = useState<State>({
 		visible: props.visible || false,
 		countries: [],
@@ -155,8 +173,8 @@ export function CountryPicker(props: CountryPickerProps) {
 	const onFocus = () => setState({ ...state, filterFocus: true })
 	const onBlur = () => setState({ ...state, filterFocus: false })
 	const flagProp = {
+		trigger,
 		countryCode,
-		withEmoji,
 		withCountryNameButton,
 		withCallingCodeButton,
 		withCurrencyButton,
@@ -168,9 +186,10 @@ export function CountryPicker(props: CountryPickerProps) {
 	}
 
 	useEffect(() => {
-		let cancel = false
+		let ran = false
+		if (ran) return
 		getCountriesAsync(
-			withEmoji ? FlagType.EMOJI : FlagType.FLAT,
+			FlagType.FLAT,
 			translation,
 			region,
 			subregion,
@@ -179,33 +198,34 @@ export function CountryPicker(props: CountryPickerProps) {
 			preferredCountries,
 			withAlphaFilter,
 		)
-			.then((countries) => (cancel ? null : setCountries(countries)))
+			.then((countries) => setCountries([...countries, ...(additional ?? [])]))
 			.catch(console.warn)
 
 		return () => {
-			cancel = true
+			ran = true
 		}
-	}, [translation, withEmoji])
+	}, [translation])
 
 	return (
 		<>
-			{withModal && renderFlagButton(flagProp)}
+			{withTrigger && <ModalTrigger {...{ ...trigger, ...flagProp }} />}
 			<CountryModal
-				{...{ visible, withModal, disableNativeModal, ...modalProps }}
+				withModal={withTrigger}
+				{...{ visible, disableNativeModal, ...modalProps }}
 				onRequestClose={onClose}
 				onDismiss={onClose}
 			>
-				<HeaderModal
-					withFilter={withSearch}
+				<ModalHeader
 					{...{
 						onClose,
 						closeButtonImage,
 						closeButtonImageStyle,
 						closeButtonStyle,
 						withCloseButton,
+						withSearch,
 					}}
-					renderFilter={(props) =>
-						renderFilter({
+					renderSearch={() =>
+						renderSearch({
 							...props,
 							renderCountryFilter,
 							onChangeText: setSearchTerm,
@@ -219,7 +239,6 @@ export function CountryPicker(props: CountryPickerProps) {
 				<SpeakerList
 					withCurrency={withCurrency ?? defaults.withCurrency}
 					withFlag={withFlag ?? defaults.withFlag}
-					withEmoji={withEmoji ?? defaults.withEmoji}
 					withCallingCode={withCallingCode ?? defaults.withCallingCode}
 					{...{
 						onSelect: onSelectClose,
@@ -240,13 +259,11 @@ export function CountryPicker(props: CountryPickerProps) {
 
 const defaults: {
 	withCallingCode: boolean
-	withEmoji: boolean
 	withFlag: boolean
 	withCurrency: boolean
 	withAlphaFilter: boolean
 } = {
 	withCallingCode: false,
-	withEmoji: false,
 	withFlag: true,
 	withCurrency: false,
 	withAlphaFilter: true,

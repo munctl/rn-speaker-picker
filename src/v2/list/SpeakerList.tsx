@@ -3,16 +3,14 @@ import { Country } from "../../types"
 import { AlphabetScrollList } from "./AlphabetScrollList"
 import React from "react"
 import ListItem from "./ListItem"
-import ListHeader from "./ListHeader"
+import ListHeading from "./ListHeading"
 import { useContext } from "../../CountryContext"
-import * as assert from "node:assert"
 
 interface SpeakerListProps {
 	data: Country[]
 	searchTerm?: string
 	filterFocus?: boolean
 	withFlag: boolean
-	withEmoji: boolean
 	withAlphaFilter: boolean
 	withCallingCode: boolean
 	withCurrency: boolean
@@ -25,7 +23,6 @@ export default function SpeakerList({
 	searchTerm,
 	withAlphaFilter,
 	withFlag,
-	withEmoji,
 	withCurrency,
 	withCallingCode,
 	onSelect,
@@ -37,14 +34,13 @@ export default function SpeakerList({
 				<AlphabetScrollList<Country>
 					{...{ withAlphaFilter }}
 					getItemKey={(item) => item.name.toString()}
-					renderSectionHeader={(item) => <ListHeader {...{ item }} />}
+					renderSectionHeader={(item) => <ListHeading {...{ item }} />}
 					renderItem={(item) => (
 						<ListItem
 							{...{
 								onSelect,
 								withCallingCode,
 								withCurrency,
-								withEmoji,
 								withFlag,
 							}}
 							country={item}

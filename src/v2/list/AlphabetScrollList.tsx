@@ -41,7 +41,7 @@ export function AlphabetScrollList<T>({
 }: AlphabetScrollListProps<T> & CustomAlphabetScrollListProps) {
 	const flashListRef = useRef<FlashList<T | string>>(null)
 	const containerY = useSharedValue(0)
-	const containerHeightRef = useSharedValue(0)
+	const containerHeight = useSharedValue(0)
 
 	const sectionTitles = useMemo(() => sections.map((s) => s.title), [sections])
 
@@ -71,21 +71,20 @@ export function AlphabetScrollList<T>({
 		}
 	}
 
-	const onGestureEvent = (
+	function onGestureEvent(
 		event: GestureUpdateEvent<PanGestureHandlerEventPayload>,
-	) => {
-		const y = event.absoluteY
-		const containerHeight = containerHeightRef.get() - containerY.get()
-		const letterHeight = containerHeight / sections.length || 1
+	) {
+		const y = Math.max(0, event.absoluteY - containerY.get())
+		const letterHeight = containerHeight.get() / sections.length || 1
 		let index = Math.floor(y / letterHeight)
 		if (index < 0) index = 0
 		if (index >= sections.length) index = sections.length - 1
 		runOnJS(scrollToSection)(index)
 	}
 
-	const onContainerLayout = (e: LayoutChangeEvent) => {
+	function onContainerLayout(e: LayoutChangeEvent) {
 		containerY.set(e.nativeEvent.layout.y)
-		containerHeightRef.set(e.nativeEvent.layout.height)
+		containerHeight.set(e.nativeEvent.layout.height)
 	}
 
 	const pan = Gesture.Pan().onUpdate(onGestureEvent)
@@ -112,27 +111,25 @@ export function AlphabetScrollList<T>({
 				}
 			/>
 			{withAlphaFilter !== false && (
-				<View
-					className="absolute right-0 top-0 bottom-0 py-2 px-1 justify-center"
-					onLayout={onContainerLayout}
-				>
-					<GestureHandlerRootView>
-						<GestureDetector gesture={pan}>
-							<View className="flex-1 justify-center">
-								{sections.map((section, i) => (
-									<TouchableOpacity
-										key={section.title}
-										onPress={() => scrollToSection(i)}
-									>
-										<Text className="text-sm py-0.5 px-1 text-zinc-800 dark:text-zinc-200 ">
-											{section.title}
-										</Text>
-									</TouchableOpacity>
-								))}
-							</View>
-						</GestureDetector>
-					</GestureHandlerRootView>
-				</View>
+				<GestureHandlerRootView className="absolute right-0 h-full">
+					<GestureDetector gesture={pan}>
+						<View
+							className="items-center px-1 py-2 my-auto bg-zinc-400/20 dark:bg-zinc-600/20 rounded-md"
+							onLayout={onContainerLayout}
+						>
+							{sections.map((section, i) => (
+								<TouchableOpacity
+									key={section.title}
+									onPress={() => scrollToSection(i)}
+								>
+									<Text className="text-sm py-0.5 px-1 text-zinc-800 dark:text-zinc-200">
+										{section.title}
+									</Text>
+								</TouchableOpacity>
+							))}
+						</View>
+					</GestureDetector>
+				</GestureHandlerRootView>
 			)}
 		</View>
 	)

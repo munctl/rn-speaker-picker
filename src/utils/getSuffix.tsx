@@ -5,12 +5,21 @@ interface GetSuffixProps {
 	currency: string
 }
 
+/***
+ * Generates a suffix string based on the provided options.
+ * @param {Object} props - The properties to determine the suffix.
+ * @param {boolean} props.withCallingCode - Whether to include the calling code.
+ * @param {boolean} props.withCurrency - Whether to include the currency.
+ * @param {string} props.callingCode - The calling code to include if applicable.
+ * @param {string} props.currency - The currency to include if applicable.
+ * @returns {string} The formatted suffix string.
+ ***/
 export default function getSuffix({
 	withCallingCode,
 	withCurrency,
 	callingCode,
 	currency,
-}: GetSuffixProps) {
+}: GetSuffixProps): string {
 	if (
 		withCurrency &&
 		currency.length > 0 &&
@@ -19,6 +28,6 @@ export default function getSuffix({
 	)
 		return `(+${callingCode}, ${currency})`
 	if (withCurrency && currency.length > 0) return `(${currency})`
-	if (withCallingCode && callingCode.length > 0) return `(${callingCode})`
+	if (withCallingCode && callingCode.length > 0) return `(+${callingCode})`
 	return ""
 }
