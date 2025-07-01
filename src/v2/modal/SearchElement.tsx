@@ -1,9 +1,9 @@
 import { TextInput, TextInputProps } from "react-native"
-import { useTheme } from "./CountryTheme"
+import { useTheme } from "../../CountryTheme"
 
 export type CountryFilterProps = TextInputProps
 
-export const CountryFilter = (props: CountryFilterProps) => {
+export const SearchElement = (props: CountryFilterProps) => {
 	const { filterPlaceholderTextColor } = useTheme()
 	return (
 		<TextInput
@@ -17,7 +17,7 @@ export const CountryFilter = (props: CountryFilterProps) => {
 	)
 }
 
-CountryFilter.defaultProps = {
+SearchElement.defaultProps = {
 	autoFocus: false,
 	placeholder: "Enter a name...",
 }

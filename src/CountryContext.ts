@@ -1,4 +1,4 @@
-import * as React from "react"
+import { createContext, useContext as uc } from "react"
 import {
 	getCountriesAsync,
 	getCountryCallingCodeAsync,
@@ -9,7 +9,7 @@ import {
 	getImageFlagAsync,
 	getLetters,
 	search,
-} from "./CountryService"
+} from "./v2/CountryService"
 import { TranslationLanguageCode } from "./types"
 
 export interface CountryContextParam {
@@ -36,11 +36,11 @@ export const DEFAULT_COUNTRY_CONTEXT = {
 	getLetters,
 	getCountryInfoAsync,
 }
-export const CountryContext = React.createContext<CountryContextParam>(
+export const CountryContext = createContext<CountryContextParam>(
 	DEFAULT_COUNTRY_CONTEXT,
 )
 
-export const useContext = () => React.useContext(CountryContext)
+export const useContext = () => uc(CountryContext)
 
 export const { Provider: CountryProvider, Consumer: CountryConsumer } =
 	CountryContext

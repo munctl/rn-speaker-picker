@@ -1,11 +1,14 @@
-import { FlatListProps, View } from "react-native"
+import { View } from "react-native"
 import { useContext } from "../../../CountryContext"
 import { Country } from "../../../types"
-import { AlphabetScrollList } from "./AlphabetScrollList"
+import {
+	AlphabetScrollList,
+	AlphabetScrollListProps,
+} from "./AlphabetScrollList"
 import ListHeading from "./ListHeading"
 import ListItem from "./ListItem"
 
-interface SpeakerListProps {
+export interface SpeakerListProps {
 	data: Country[]
 	searchTerm?: string
 	filterFocus?: boolean
@@ -13,11 +16,15 @@ interface SpeakerListProps {
 	withAlphaFilter: boolean
 	withCallingCode: boolean
 	withCurrency: boolean
-	flatListProps?: FlatListProps<Country>
 	onSelect(country: Country): void
+
+	wrapperClassName?: string
+	speakerList?: AlphabetScrollListProps<Country>
+
+	rest?: any
 }
 
-export default function SpeakerList({
+export function SpeakerList({
 	data,
 	searchTerm,
 	withAlphaFilter,
@@ -25,13 +32,15 @@ export default function SpeakerList({
 	withCurrency,
 	withCallingCode,
 	onSelect,
+	speakerList,
+	wrapperClassName = "flex-1 flex-row content-between mx-1",
+	...rest
 }: SpeakerListProps) {
 	const { search } = useContext()
 	return (
-		<View className="flex-1 flex-row content-between mx-1">
+		<View {...rest} className={wrapperClassName}>
 			<View className="grow">
 				<AlphabetScrollList<Country>
-					{...{ withAlphaFilter }}
 					getItemKey={(item) => item.name.toString()}
 					renderSectionHeader={(item) => <ListHeading {...{ item }} />}
 					renderItem={(item) => (
@@ -61,6 +70,7 @@ export default function SpeakerList({
 							.sort((a, b) => a.localeCompare(b))
 							.map((ch) => ({ title: ch, data: groups[ch] }))
 					})()}
+					{...{ withAlphaFilter, ...speakerList }}
 				/>
 			</View>
 		</View>

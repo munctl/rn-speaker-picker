@@ -1,15 +1,7 @@
 import { ReactNode, useContext, useEffect } from "react"
-import { ModalProps, Platform, SafeAreaView, StyleSheet } from "react-native"
+import { Modal, ModalProps, Platform, SafeAreaView } from "react-native"
 import { AnimatedModal } from "./AnimatedModal"
 import { CountryModalContext } from "./CountryModalProvider"
-import { useTheme } from "./CountryTheme"
-import { Modal } from "./Modal"
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-})
 
 export function CountryModal({
 	children,
@@ -21,25 +13,17 @@ export function CountryModal({
 	withModal?: boolean
 	disableNativeModal?: boolean
 }) {
-	const { backgroundColor } = useTheme()
 	const { teleport } = useContext(CountryModalContext)
-	const content = (
-		<SafeAreaView style={[styles.container, { backgroundColor }]}>
-			{children}
-		</SafeAreaView>
-	)
+
+	const content = <SafeAreaView className="flex-1">{children}</SafeAreaView>
 	useEffect(() => {
 		if (disableNativeModal) {
 			teleport!(<AnimatedModal {...props}>{content}</AnimatedModal>)
 		}
 	}, [disableNativeModal])
 	if (withModal) {
-		if (Platform.OS === "web") {
-			return <Modal {...props}>{content}</Modal>
-		}
-		if (disableNativeModal) {
-			return null
-		}
+		if (Platform.OS === "web") return <Modal {...props}>{content}</Modal>
+		if (disableNativeModal) return null
 		return <Modal {...props}>{content}</Modal>
 	}
 	return content

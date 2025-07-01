@@ -1,3 +1,4 @@
+import Fuse, { IFuseOptions } from "fuse.js"
 import {
 	Country,
 	CountryCode,
@@ -7,8 +8,7 @@ import {
 	Subregion,
 	TranslationLanguageCode,
 	TranslationLanguageCodeMap,
-} from "./types"
-import Fuse, { IFuseOptions } from "fuse.js"
+} from "../types"
 
 const imageJsonUrl =
 	"https://xcarpentier.github.io/react-native-country-picker-modal/countries/"
@@ -44,7 +44,7 @@ export const loadDataAsync = (
 					break
 				default:
 					if (!data.emojiCountries) {
-						data.emojiCountries = require("./assets/data/countries-emoji.json")
+						data.emojiCountries = require("../assets/data/countries-emoji.json")
 						resolve(data.emojiCountries!)
 					} else {
 						resolve(data.emojiCountries)
@@ -55,7 +55,7 @@ export const loadDataAsync = (
 	}
 )(localData)
 
-export const getEmojiFlagAsync = async (countryCode: CountryCode = "FR") => {
+export async function getEmojiFlagAsync(countryCode: CountryCode) {
 	const countries = await loadDataAsync()
 	if (!countries) {
 		throw new Error("Unable to find emoji because emojiCountries is undefined")
@@ -63,7 +63,7 @@ export const getEmojiFlagAsync = async (countryCode: CountryCode = "FR") => {
 	return countries[countryCode].flag
 }
 
-export const getImageFlagAsync = async (countryCode: CountryCode = "FR") => {
+export async function getImageFlagAsync(countryCode: CountryCode) {
 	const countries = await loadDataAsync(FlagType.FLAT)
 	if (!countries) {
 		throw new Error("Unable to find image because imageCountries is undefined")
@@ -71,10 +71,10 @@ export const getImageFlagAsync = async (countryCode: CountryCode = "FR") => {
 	return countries[countryCode].flag
 }
 
-export const getCountryNameAsync = async (
-	countryCode: CountryCode = "FR",
+export async function getCountryNameAsync(
+	countryCode: CountryCode,
 	translation: TranslationLanguageCode = "common",
-) => {
+) {
 	const countries = await loadDataAsync()
 	if (!countries) {
 		throw new Error("Unable to find image because imageCountries is undefined")
@@ -87,7 +87,7 @@ export const getCountryNameAsync = async (
 			]
 }
 
-export const getCountryCallingCodeAsync = async (countryCode: CountryCode) => {
+export async function getCountryCallingCodeAsync(countryCode: CountryCode) {
 	const countries = await loadDataAsync()
 	if (!countries) {
 		throw new Error("Unable to find image because imageCountries is undefined")
@@ -95,7 +95,7 @@ export const getCountryCallingCodeAsync = async (countryCode: CountryCode) => {
 	return countries[countryCode].callingCode[0]
 }
 
-export const getCountryCurrencyAsync = async (countryCode: CountryCode) => {
+export async function getCountryCurrencyAsync(countryCode: CountryCode) {
 	const countries = await loadDataAsync()
 	if (!countries) {
 		throw new Error("Unable to find image because imageCountries is undefined")
@@ -124,7 +124,7 @@ const isExcluded = (excludeCountries?: CountryCode[]) => (country: Country) =>
 		? !excludeCountries.includes(country.cca2)
 		: true
 
-export const getCountriesAsync = async (
+export async function getCountriesAsync(
 	flagType: FlagType,
 	translation: TranslationLanguageCode = "common",
 	region?: Region,
@@ -133,7 +133,7 @@ export const getCountriesAsync = async (
 	excludeCountries?: CountryCode[],
 	preferredCountries?: CountryCode[],
 	withAlphaFilter?: boolean,
-): Promise<Country[]> => {
+): Promise<Country[]> {
 	const countriesRaw = await loadDataAsync(flagType)
 	if (!countriesRaw) {
 		return []
@@ -196,11 +196,11 @@ const DEFAULT_FUSE_OPTION = {
 }
 let fuse: Fuse<Country>
 
-export const search = (
+export function search(
 	term: string = "",
 	data: Country[] = [],
 	options: IFuseOptions<Country> = DEFAULT_FUSE_OPTION,
-) => {
+) {
 	if (data.length === 0) {
 		return []
 	}
@@ -215,28 +215,27 @@ export const search = (
 }
 const unique = (arr: string[]) => Array.from(new Set(arr))
 
-export const getLetters = (countries: Country[]) => {
-	return unique(
+export const getLetters = (countries: Country[]) =>
+	unique(
 		countries
 			.map((country: Country) =>
 				(country.name as string).slice(0, 1).toLocaleUpperCase(),
 			)
 			.sort((l1: string, l2: string) => l1.localeCompare(l2)),
 	)
-}
 
 export interface CountryInfo {
 	countryName: string
 	currency: string
 	callingCode: string
 }
-export const getCountryInfoAsync = async ({
+export async function getCountryInfoAsync({
 	countryCode,
 	translation,
 }: {
 	countryCode: CountryCode
 	translation?: TranslationLanguageCode
-}): Promise<CountryInfo> => {
+}): Promise<CountryInfo> {
 	const countryName = await getCountryNameAsync(
 		countryCode,
 		translation || "common",

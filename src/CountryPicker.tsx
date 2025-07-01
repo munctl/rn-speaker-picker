@@ -5,16 +5,18 @@ import {
 	ImageStyle,
 	ModalProps,
 	StyleProp,
+	Text,
 	ViewStyle,
 } from "react-native"
 import { useContext } from "./CountryContext"
-import { CountryFilter, CountryFilterProps } from "./CountryFilter"
-import { CountryModal } from "./CountryModal"
+import { SearchElement, CountryFilterProps } from "./v2/modal/SearchElement"
+import { CountryModal } from "./v2/modal/CountryModal"
 import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
-import SpeakerList from "./v2/modal/list/SpeakerList"
+import { SpeakerList } from "./v2/modal/list/SpeakerList"
 import { ModalHeader } from "./v2/modal/ModalHeader"
 import { TriggerProps } from "./v2/types/Props"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 interface State {
 	visible: boolean
@@ -24,15 +26,15 @@ interface State {
 }
 
 interface RenderCountryFilterProps
-	extends ComponentProps<typeof CountryFilter> {
-	renderCountryFilter?(props: ComponentProps<typeof CountryFilter>): ReactNode
+	extends ComponentProps<typeof SearchElement> {
+	renderCountryFilter?(props: ComponentProps<typeof SearchElement>): ReactNode
 }
 
 const renderSearch = (props: RenderCountryFilterProps): ReactNode =>
 	props.renderCountryFilter ? (
 		props.renderCountryFilter(props)
 	) : (
-		<CountryFilter {...props} />
+		<SearchElement {...props} />
 	)
 
 interface CountryPickerProps {
@@ -62,7 +64,7 @@ interface CountryPickerProps {
 	closeButtonStyle?: StyleProp<ViewStyle>
 	closeButtonImageStyle?: StyleProp<ImageStyle>
 	renderFlagButton?(props: ComponentProps<typeof FlagButton>): ReactNode
-	renderCountryFilter?(props: ComponentProps<typeof CountryFilter>): ReactNode
+	renderCountryFilter?(props: ComponentProps<typeof SearchElement>): ReactNode
 	onSelect(country: Country): void
 	onOpen?(): void
 	onClose?(): void

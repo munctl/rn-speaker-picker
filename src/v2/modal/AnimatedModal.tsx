@@ -1,4 +1,4 @@
-import * as React from "react"
+import { ReactNode, useEffect } from "react"
 import { Animated, Dimensions, StyleSheet } from "react-native"
 
 const { height } = Dimensions.get("window")
@@ -8,10 +8,10 @@ const useNativeDriver = true
 
 interface Props {
 	visible?: boolean
-	children: React.ReactNode
+	children: ReactNode
 }
 
-export function AnimatedModal({ children, visible }: Props) {
+export function AnimatedModal({ children, visible = false }: Props) {
 	const translateY = new Animated.Value(height)
 
 	const showModal = Animated.timing(translateY, {
@@ -26,7 +26,7 @@ export function AnimatedModal({ children, visible }: Props) {
 		useNativeDriver,
 	}).start
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (visible) {
 			showModal()
 		} else {
@@ -39,14 +39,10 @@ export function AnimatedModal({ children, visible }: Props) {
 			style={{
 				...StyleSheet.absoluteFillObject,
 				transform: [{ translateY }],
-				zIndex: 99,
 			}}
+			className="z-[99]"
 		>
 			{children}
 		</Animated.View>
 	)
-}
-
-AnimatedModal.defaultProps = {
-	visible: false,
 }

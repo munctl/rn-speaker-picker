@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import { FlatListProps, ModalProps, StyleProp, ViewStyle } from "react-native"
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext"
-import { CountryFilterProps } from "./CountryFilter"
+import { CountryFilterProps } from "./v2/modal/SearchElement"
 import { CountryPicker } from "./CountryPicker"
 import { DEFAULT_THEME, Theme, ThemeProvider } from "./CountryTheme"
 import {
@@ -64,14 +64,14 @@ export default function Main({
 	)
 }
 
-export { CountryFilter } from "./CountryFilter"
-export { CountryList } from "./CountryList"
-export { CountryModal } from "./CountryModal"
-export { CountryModalProvider } from "./CountryModalProvider"
+export { SearchElement } from "./v2/modal/SearchElement"
+export { SpeakerList } from "./v2/modal/list/SpeakerList"
+export { CountryModal } from "./v2/modal/CountryModal"
+export { CountryModalProvider } from "./v2/modal/CountryModalProvider"
 export {
 	getCountriesAsync as getAllCountries,
 	getCountryCallingCodeAsync as getCallingCode,
-} from "./CountryService"
+} from "./v2/CountryService"
 export { DARK_THEME, DEFAULT_THEME } from "./CountryTheme"
 export { Flag } from "./Flag"
 export { FlagButton } from "./v2/trigger/FlagButton"
