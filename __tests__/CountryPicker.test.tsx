@@ -1,12 +1,7 @@
-import React from "react"
+import { render } from "@testing-library/react-native"
+import { CountryPicker } from "../src/CountryPicker"
 
-import { create } from "react-test-renderer"
-
-import CountryPicker from "../src/"
-
-it("CountryPicker can be created", () => {
-	const picker = create(
-		<CountryPicker countryCode={"US"} onSelect={() => {}} />,
-	)
+it("Can be created", () => {
+	const picker = render(<CountryPicker onSelect={() => {}} />)
 	expect(picker).toBeDefined()
 })

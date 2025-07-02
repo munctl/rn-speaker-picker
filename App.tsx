@@ -186,6 +186,7 @@ export default function App() {
 							<CountryPicker
 								trigger={{
 									wrapperClassName: "mx-auto",
+									id: "country-picker-trigger",
 									...triggerProps,
 								}}
 								theme={dark ? DARK_THEME : {}}

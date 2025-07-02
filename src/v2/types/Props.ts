@@ -16,4 +16,6 @@ export interface TriggerProps {
 
 	placeholder?: string
 	countryCode?: CountryCode
+
+	[key: string]: any
 }

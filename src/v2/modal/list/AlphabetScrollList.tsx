@@ -29,7 +29,7 @@ export interface AlphabetScrollListProps<T> {
 		textClassName?: string
 		onSectionChange?: (section: string) => void
 	}
-	rest?: any
+	[key: string]: any
 }
 
 export function AlphabetScrollList<T>({

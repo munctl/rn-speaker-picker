@@ -1,0 +1,8 @@
+- tapOn:
+    text: 'Tap to select a country'
+- tapOn:
+    text: 'Z'
+- tapOn:
+    text: 'A'
+- tapOn:
+    id: 'country-selector-AQ'

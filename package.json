@@ -19,7 +19,7 @@
     "config:dev": "json -I -f package.json -e 'this.main=\"node_modules/expo/AppEntry.js\"'",
     "config:npm": "json -I -f package.json -e 'this.main=\"lib/index.js\"'",
     "lint": "biome lint .",
-    "test": "TZ=Europe/Paris jest",
+    "test": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' jest",
     "data:image": "rm -rf ./data/countries.json && ./scripts/transform-world-countries.js > ./data/countries.json",
     "data:emoji": "rm -rf ./data/countries-emoji.json && ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
     "data:cca2": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json",
@@ -54,8 +54,8 @@
     "@callstack/react-theme-provider": "3.0.9",
     "@expo/metro-runtime": "~5.0.4",
     "@expo/vector-icons": "^14.1.0",
-    "@shopify/flash-list": "2.0.0-rc.9",
-    "expo": "~53.0.13",
+    "@shopify/flash-list": "1.7.6",
+    "expo": "~53.0.15",
     "expo-crypto": "~14.1.5",
     "fuse.js": "^7.1.0",
     "nativewind": "^4.1.23",
@@ -63,7 +63,7 @@
     "react": "19.0.0",
     "react-async-hook": "4.0.0",
     "react-native": "0.79.4",
-    "react-native-gesture-handler": "^2.26.0",
+    "react-native-gesture-handler": "^2.24.0",
     "react-native-reanimated": "~3.17.5",
     "react-native-safe-area-context": "5.4.0"
   },
@@ -73,7 +73,8 @@
     "@babel/preset-env": "^7.27.2",
     "@biomejs/biome": "^2.0.6",
     "@react-native/metro-config": "^0.80.0",
-    "@types/jest": "30.0.0",
+    "@testing-library/react-native": "^13.2.0",
+    "@types/jest": "^29.5.14",
     "@types/react": "19.0.14",
     "@types/react-test-renderer": "19.1.0",
     "babel-jest": "^30.0.2",
@@ -82,45 +83,20 @@
     "gh-pages": "6.3.0",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
-    "jest-expo": "^53.0.7",
+    "jest-environment-jsdom": "^30.0.2",
     "json": "^11.0.0",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-native": "^0.79.4",
     "react-native-web": "^0.20.0",
-    "react-test-renderer": "19.1.0",
     "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
     "typescript": "5.8.3",
     "world-countries": "5.1.0"
-  },
-  "jest": {
-    "preset": "react-native",
-    "testEnvironment": "jsdom",
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "ts",
-      "tsx"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
-    },
-    "testMatch": [
-      "**/*.test.ts?(x)"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example-expo",
-      "<rootDir>/example-slack-message"
-    ]
   },
   "husky": {
     "hooks": {
       "pre-commit": "pnpm lint && pnpm tsc"
     }
-  },
-  "resolutions": {
-    "mem": "^4.0.0"
   }
 }

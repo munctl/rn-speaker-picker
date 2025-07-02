@@ -21,7 +21,7 @@ export interface SpeakerListProps {
 	wrapperClassName?: string
 	speakerList?: AlphabetScrollListProps<Country>
 
-	rest?: any
+	[key: string]: any
 }
 
 export function SpeakerList({

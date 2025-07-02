@@ -7,7 +7,7 @@ import { CountryCode } from "./types"
 interface FlagType {
 	countryCode: CountryCode
 	flagSize: number
-	[key: string]: any // Allow additional props
+	[key: string]: any
 }
 
 const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
