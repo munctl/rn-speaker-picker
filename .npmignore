@@ -45,3 +45,4 @@ maestro/
 ISSUE_TEMPLATE.md
 ios/
 android/
+babel.config.js
