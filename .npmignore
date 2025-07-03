@@ -20,19 +20,22 @@ scripts/
 src/
 data/
 App.tsx
-tsconfig.json
 tslint.json
 .editorconfig
 app.json
 CODE_OF_CONDUCT.md
+
+# TS
 typings.d.ts
+nativewind-env.d.ts
+tsconfig.json
+
 __tests__/
 .expo/
 .github/
 .vscode/
 web-build/
 lib/assets/data/countries-image.json
-.prettierrc
 lib/assets/images/icon.png
 lib/assets/images/splash.png
 .expo-shared/assets.json
