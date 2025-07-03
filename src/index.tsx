@@ -3,7 +3,6 @@ import { FlatListProps, ModalProps, StyleProp, ViewStyle } from "react-native"
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext"
 import { CountryFilterProps } from "./v2/modal/SearchElement"
 import { CountryPicker } from "./CountryPicker"
-import { DEFAULT_THEME, Theme, ThemeProvider } from "./CountryTheme"
 import {
 	Country,
 	CountryCode,
@@ -21,7 +20,6 @@ interface Props {
 	countryCodes?: CountryCode[]
 	excludeCountries?: CountryCode[]
 	preferredCountries?: CountryCode[]
-	theme?: Theme
 	translation?: TranslationLanguageCode
 	modalProps?: ModalProps
 	filterProps?: CountryFilterProps
@@ -50,17 +48,14 @@ interface Props {
 }
 
 export default function Main({
-	theme,
 	translation,
 	onSelect = () => {},
 	...props
 }: Props) {
 	return (
-		<ThemeProvider theme={{ ...DEFAULT_THEME, ...theme }}>
 			<CountryProvider value={{ ...DEFAULT_COUNTRY_CONTEXT, translation }}>
 				<CountryPicker {...{ onSelect, ...props }} />
 			</CountryProvider>
-		</ThemeProvider>
 	)
 }
 
@@ -72,7 +67,6 @@ export {
 	getCountriesAsync as getAllCountries,
 	getCountryCallingCodeAsync as getCallingCode,
 } from "./v2/CountryService"
-export { DARK_THEME, DEFAULT_THEME } from "./CountryTheme"
 export { Flag } from "./Flag"
 export { FlagButton } from "./v2/trigger/FlagButton"
 export { ModalHeader } from "./v2/modal/ModalHeader"

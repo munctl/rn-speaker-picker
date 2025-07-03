@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
 	View,
-	Pressable,
 	ScrollView,
 	Switch,
 	Text,
@@ -13,14 +12,12 @@ import CountryPicker, {
 	type Country,
 	type CountryCode,
 	CountryModalProvider,
-	DARK_THEME,
 } from "./src"
 import "./src/assets/global.css"
 import { colorScheme } from "nativewind"
 import { TriggerProps } from "./src/v2/types/Props"
 import {
 	SafeAreaProvider,
-	useSafeAreaInsets,
 } from "react-native-safe-area-context"
 
 interface OptionProps {
@@ -34,6 +31,7 @@ const Option = ({ value, onValueChange, title }: OptionProps) => (
 		<Text className="dark:text-zinc-100 text-zinc-800 text-lg">{title}</Text>
 	</View>
 )
+
 /***
  Demo
  ***/
@@ -189,7 +187,6 @@ export default function App() {
 									id: "country-picker-trigger",
 									...triggerProps,
 								}}
-								theme={dark ? DARK_THEME : {}}
 								{...{
 									countryCode,
 									withSearch,

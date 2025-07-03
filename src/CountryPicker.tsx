@@ -5,7 +5,6 @@ import {
 	ImageStyle,
 	ModalProps,
 	StyleProp,
-	Text,
 	ViewStyle,
 } from "react-native"
 import { useContext } from "./CountryContext"
@@ -16,7 +15,6 @@ import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
 import { SpeakerList } from "./v2/modal/list/SpeakerList"
 import { ModalHeader } from "./v2/modal/ModalHeader"
 import { TriggerProps } from "./v2/types/Props"
-import { SafeAreaProvider } from "react-native-safe-area-context"
 
 interface State {
 	visible: boolean

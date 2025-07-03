@@ -5,7 +5,6 @@ import {
 	getCountryCurrencyAsync,
 	getCountryInfoAsync,
 	getCountryNameAsync,
-	getEmojiFlagAsync,
 	getImageFlagAsync,
 	getLetters,
 	search,
@@ -16,7 +15,6 @@ export interface CountryContextParam {
 	translation?: TranslationLanguageCode
 	getCountryNameAsync: typeof getCountryNameAsync
 	getImageFlagAsync: typeof getImageFlagAsync
-	getEmojiFlagAsync: typeof getEmojiFlagAsync
 	getCountriesAsync: typeof getCountriesAsync
 	getLetters: typeof getLetters
 	getCountryCallingCodeAsync: typeof getCountryCallingCodeAsync
@@ -28,7 +26,6 @@ export const DEFAULT_COUNTRY_CONTEXT = {
 	translation: "common" as TranslationLanguageCode,
 	getCountryNameAsync,
 	getImageFlagAsync,
-	getEmojiFlagAsync,
 	getCountriesAsync,
 	getCountryCallingCodeAsync,
 	getCountryCurrencyAsync,
