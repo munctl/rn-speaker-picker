@@ -1,8 +1,10 @@
 - tapOn:
-    text: 'Tap to select a country'
+    id: 'country-picker-trigger'
 - tapOn:
     text: 'Z'
 - tapOn:
     text: 'A'
 - tapOn:
     id: 'country-selector-AQ'
+- assertVisible:
+    text: 'Antarctica '
