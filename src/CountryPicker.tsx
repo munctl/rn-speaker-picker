@@ -160,7 +160,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 
 	return (
 		<>
-			{withTrigger && <ModalTrigger {...{ onOpen, countryCode, ...trigger }} />}
+			{withTrigger && <ModalTrigger {...{ onOpen, countryCode, ...trigger }} testID="country-picker-trigger" />}
 			<CountryModal
 				withModal={withTrigger}
 				{...{ visible, disableNativeModal, ...modalProps }}

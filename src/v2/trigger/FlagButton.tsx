@@ -24,7 +24,7 @@ const TriggerInner = memo(
 		flagSize = 24,
 		placeholder = "Tap to select a country",
 		textClassName = "text-lg text-zinc-800 dark:text-zinc-100",
-		...props
+		...rest
 	}: TriggerProps) => {
 		const { translation, getCountryInfoAsync } = useContext()
 		const [state, setState] = useState({
@@ -42,7 +42,7 @@ const TriggerInner = memo(
 		}, [countryCode, withCountryName, withCurrency, withCallingCode])
 
 		return (
-			<View className="flex-row flex-wrap items-center gap-2" {...props}>
+			<View className="flex-row flex-wrap items-center gap-2" {...rest}>
 				{countryCode ? (
 					withFlag && <Flag {...{ countryCode, withFlag, flagSize }} />
 				) : (
@@ -72,11 +72,12 @@ export function FlagButton({
 	wrapperClassName,
 	countryCode,
 	flagSize,
+	testID,
 	...rest
 }: TriggerProps) {
 	return (
-		<TouchableOpacity onPress={onOpen}>
-			<View {...rest} className={wrapperClassName}>
+		<TouchableOpacity onPress={onOpen} {...rest} testID={rest.id}>
+			<View className={wrapperClassName}>
 				<TriggerInner
 					{...{
 						countryCode,

@@ -60,7 +60,7 @@ export function AlphabetScrollList<T>({
 
 	return (
 		<View className="flex-1" {...rest}>
-			<FlashList
+			<FlashList estimatedItemSize={48}
 				ref={flashListRef}
 				className="flex-1"
 				data={flatData}
