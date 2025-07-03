@@ -39,3 +39,9 @@ lib/assets/images/splash.png
 biome.jsonc
 media/
 maestro/
+.idea/
+.gitattributes
+.circleci/
+ISSUE_TEMPLATE.md
+ios/
+android/

@@ -2,7 +2,7 @@
   "name": "rn-speaker-picker",
   "version": "2.0.0-munctl",
   "description": "A React Native component to pick a speaker from a list of countries and NGOs, with flags and search functionality.",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
