@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { FlatListProps, ModalProps, StyleProp, ViewStyle } from "react-native"
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext"
 import { CountryFilterProps } from "./v2/modal/SearchElement"
-import { CountryPicker } from "./CountryPicker"
+import { CountryPicker, CountryPickerProps } from "./CountryPicker"
 import {
 	Country,
 	CountryCode,
@@ -12,7 +12,7 @@ import {
 } from "./types"
 import { TriggerProps } from "./v2/types/Props"
 
-interface Props {
+/*interface Props {
 	trigger?: TriggerProps
 	countryCode?: CountryCode
 	region?: Region
@@ -45,6 +45,10 @@ interface Props {
 	onSelect(country: Country): void
 	onOpen?(): void
 	onClose?(): void
+}*/
+
+type Props = CountryPickerProps & {
+	translation?: TranslationLanguageCode
 }
 
 export default function Main({
@@ -53,9 +57,9 @@ export default function Main({
 	...props
 }: Props) {
 	return (
-			<CountryProvider value={{ ...DEFAULT_COUNTRY_CONTEXT, translation }}>
-				<CountryPicker {...{ onSelect, ...props }} />
-			</CountryProvider>
+		<CountryProvider value={{ ...DEFAULT_COUNTRY_CONTEXT, translation }}>
+			<CountryPicker {...{ onSelect, ...props }} />
+		</CountryProvider>
 	)
 }
 
@@ -70,4 +74,5 @@ export {
 export { Flag } from "./Flag"
 export { FlagButton } from "./v2/trigger/FlagButton"
 export { ModalHeader } from "./v2/modal/ModalHeader"
+export { CountryPicker } from "./CountryPicker"
 export * from "./types"
