@@ -8,7 +8,6 @@ lib-cov
 coverage
 .lock-wscript
 build/Release
-node_modules
 res
 examples
 example
@@ -49,3 +48,6 @@ ISSUE_TEMPLATE.md
 ios/
 android/
 babel.config.js
+pnpm-workspace.yaml
+README.md
+tailwind.config.ts

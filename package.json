@@ -1,93 +1,90 @@
 {
-  "name": "@munctl/rn-speaker-picker",
-  "version": "2.0.0-munctl",
-  "description": "A React Native component to pick a speaker from a list of countries and NGOs, with flags and search functionality.",
-  "main": "node_modules/expo/AppEntry.js",
-  "types": "lib/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/munctl/rn-speaker-picker"
-  },
-  "homepage": "https://munctl.app/",
-  "scripts": {
-    "start": "pnpm config:dev && expo start",
-    "start:web": "pnpm config:dev && expo start -w",
-    "tsc": "node_modules/.bin/tsc --noEmit",
-    "build": "rm -rf lib/ && node_modules/.bin/tsc && mkdir ./lib && cp -rf ./src/assets ./lib/assets && pnpm minify",
-    "minify": "pnpm minify:emoji",
-    "minify:emoji": "./scripts/minify.js ./lib/assets/data/countries-emoji.json",
-    "config:dev": "json -I -f package.json -e 'this.main=\"node_modules/expo/AppEntry.js\"'",
-    "config:npm": "json -I -f package.json -e 'this.main=\"lib/index.js\"'",
-    "lint": "biome lint .",
-    "test": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' jest",
-    "data:image": "rm -rf ./data/countries.json && ./scripts/transform-world-countries.js > ./data/countries.json",
-    "data:emoji": "rm -rf ./data/countries-emoji.json && ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
-    "data:cca2": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json",
-    "data:regions": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --regions > ./data/regions.json",
-    "data:subregions": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --subregions > ./data/subregions.json",
-    "cleaning": "rm -rf node_modules && rm -f pnpm.lock && pnpm cache clean && pnpm install && watchman watch-del-all && rm -fr $TMPDIR/react-*",
-    "verify": "pnpm lint && pnpm build",
-    "prepublishOnly": "pnpm verify && pnpm config:npm",
-    "postpublish": "pnpm config:dev",
-    "deploy": "gh-pages -d web-build",
-    "predeploy": "pnpm verify && expo build:web && mkdir web-build/countries && cp ./data/countries.json web-build/countries/index.json",
-    "android": "expo run:android",
-    "ios": "expo run:ios"
-  },
-  "keywords": [
-    "react-native",
-    "components",
-    "country-picker",
-    "country",
-    "flag"
-  ],
-  "author": "RGN <hello@rgn.dev> (https://rgn.one)",
-  "contributors": [
-    "RGN <hello@rgn.dev> (https://rgn.one)",
-    "Xavier Carpentier <xcapetir@gmail.com> (https://xaviercarpentier.com/)"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/munctl/rn-speaker-picker/issues"
-  },
-  "dependencies": {
-    "@callstack/react-theme-provider": "3.0.9",
-    "@expo/metro-runtime": "~5.0.4",
-    "@expo/vector-icons": "^14.1.0",
-    "@shopify/flash-list": "1.7.6",
-    "expo": "~53.0.15",
-    "expo-crypto": "~14.1.5",
-    "fuse.js": "^7.1.0",
-    "nativewind": "^4.1.23",
-    "react": "19.0.0",
-    "react-async-hook": "4.0.0",
-    "react-native": "0.79.4",
-    "react-native-gesture-handler": "^2.24.0",
-    "react-native-reanimated": "~3.17.5",
-    "react-native-safe-area-context": "5.4.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.27.2",
-    "@babel/core": "^7.25.2",
-    "@biomejs/biome": "^2.0.6",
-    "@react-native/metro-config": "^0.80.0",
-    "@types/react": "19.0.14",
-    "babel-preset-expo": "^13.0.0",
-    "expo": "^53.0.13",
-    "gh-pages": "6.3.0",
-    "husky": "^9.1.7",
-    "json": "^11.0.0",
-    "prettier-plugin-tailwindcss": "^0.5.14",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-native-web": "^0.20.0",
-    "tailwindcss": "^3.4.17",
-    "typescript": "5.8.3",
-    "world-countries": "5.1.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pnpm lint && pnpm tsc"
-    }
-  }
+	"name": "@munctl/rn-speaker-picker",
+	"version": "2.0.0-munctl",
+	"description": "A React Native component to pick a speaker from a list of countries and NGOs, with flags and search functionality.",
+	"main": "dist/index.js",
+	"types": "lib/index.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/munctl/rn-speaker-picker"
+	},
+	"typings": "rn-speaker-picker.d.ts",
+	"homepage": "https://munctl.app/",
+	"scripts": {
+		"start": "pnpm config:dev && expo start",
+		"start:web": "pnpm config:dev && expo start -w",
+		"build": "rm -rf dist/ && tsc && cp -rf ./src/assets ./dist/assets && pnpm minify",
+		"minify": "pnpm minify:emoji",
+		"minify:emoji": "./scripts/minify.js ./dist/assets/data/countries-emoji.json",
+		"config:dev": "json -I -f package.json -e 'this.main=\"node_modules/expo/AppEntry.js\"'",
+		"config:npm": "json -I -f package.json -e 'this.main=\"dist/index.js\"'",
+		"lint": "biome lint .",
+		"data:image": "rm -rf ./data/countries.json && ./scripts/transform-world-countries.js > ./data/countries.json",
+		"data:emoji": "rm -rf ./data/countries-emoji.json && ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
+		"data:cca2": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json",
+		"data:regions": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --regions > ./data/regions.json",
+		"data:subregions": "rm -rf ./data/cca2.json && ./scripts/transform-world-countries.js --subregions > ./data/subregions.json",
+		"cleaning": "rm -rf node_modules && rm -f pnpm.lock && pnpm cache clean && pnpm install && watchman watch-del-all && rm -fr $TMPDIR/react-*",
+		"verify": "pnpm lint && pnpm build",
+		"prepublishOnly": "pnpm verify && pnpm config:npm",
+		"postpublish": "pnpm config:dev",
+		"deploy": "gh-pages -d web-build",
+		"predeploy": "pnpm verify && expo build:web && mkdir web-build/countries && cp ./data/countries.json web-build/countries/index.json",
+		"prepack": "tsc"
+	},
+	"keywords": [
+		"react-native",
+		"components",
+		"country-picker",
+		"country",
+		"flag"
+	],
+	"author": "RGN <hello@rgn.dev> (https://rgn.one)",
+	"contributors": [
+		"RGN <hello@rgn.dev> (https://rgn.one)",
+		"Xavier Carpentier <xcapetir@gmail.com> (https://xaviercarpentier.com/)"
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/munctl/rn-speaker-picker/issues"
+	},
+	"dependencies": {
+		"@expo/metro-runtime": "~5.0.4",
+		"@expo/vector-icons": "^14.1.0",
+		"@shopify/flash-list": "1.7.6",
+		"expo": "~53.0.15",
+		"expo-crypto": "~14.1.5",
+		"fuse.js": "^7.1.0",
+		"nativewind": "^4.1.23",
+		"react": "19.0.0",
+		"react-async-hook": "4.0.0",
+		"react-native": "0.79.4",
+		"react-native-gesture-handler": "^2.24.0",
+		"react-native-reanimated": "~3.17.5",
+		"react-native-safe-area-context": "5.4.0"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.27.2",
+		"@babel/core": "^7.25.2",
+		"@biomejs/biome": "^2.0.6",
+		"@react-native/metro-config": "^0.80.0",
+		"@types/react": "19.0.14",
+		"babel-preset-expo": "^13.0.0",
+		"expo": "^53.0.13",
+		"gh-pages": "6.3.0",
+		"husky": "^9.1.7",
+		"json": "^11.0.0",
+		"prettier-plugin-tailwindcss": "^0.5.14",
+		"react": "19.0.0",
+		"react-dom": "19.0.0",
+		"react-native-web": "^0.20.0",
+		"tailwindcss": "^3.4.17",
+		"typescript": "5.8.3",
+		"world-countries": "5.1.0"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pnpm lint && pnpm tsc --noEmit"
+		}
+	}
 }

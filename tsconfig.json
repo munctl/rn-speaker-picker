@@ -1,11 +1,29 @@
 {
-	"include": ["src", "App.tsx", "nativewind-env.d.ts"],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "nativewind-env.d.ts"],
 	"compilerOptions": {
 		"declaration": true,
-		"outDir": "./lib",
+		"noEmit": false,
+		"outDir": "./dist",
 		"strict": true,
-		"lib": ["dom", "esnext"],
-		"typeRoots": ["./node_modules/@types", "./@types"]
+		"removeComments": true,
+		"jsx": "react-jsx",
+		"target": "es2020",
+		"module": "esnext",
+		"allowSyntheticDefaultImports": true,
+		"noImplicitAny": true,
+		"experimentalDecorators": true,
+		"preserveConstEnums": true,
+		"sourceMap": true,
+		"strictNullChecks": true,
+		"skipDefaultLibCheck": true,
+		"skipLibCheck": true,
+		"importHelpers": false,
+		"alwaysStrict": true,
+		"forceConsistentCasingInFileNames": true,
+		"strictFunctionTypes": true,
+		"resolveJsonModule": true,
+		"strictPropertyInitialization": false,
+		"lib": ["dom", "esnext"]
 	},
 	"exclude": ["node_modules"],
 	"extends": "expo/tsconfig.base"
