@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
 	View,
 	ScrollView,
@@ -16,9 +16,7 @@ import CountryPicker, {
 import "./src/assets/global.css"
 import { colorScheme } from "nativewind"
 import { TriggerProps } from "./src/v2/types/Props"
-import {
-	SafeAreaProvider,
-} from "react-native-safe-area-context"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 interface OptionProps {
 	title: string
@@ -187,14 +185,16 @@ export default function App() {
 									id: "country-picker-trigger",
 									...triggerProps,
 								}}
+								list={{
+									withAlphaFilter,
+									withCallingCode,
+									withCurrency,
+									withFlag,
+								}}
 								{...{
 									countryCode,
 									withSearch,
 									excludeCountries: ["FR"],
-									withFlag,
-									withAlphaFilter,
-									withCallingCode,
-									withCurrency,
 									withTrigger,
 									withCloseButton,
 									onSelect,

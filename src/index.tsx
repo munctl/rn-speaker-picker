@@ -1,16 +1,7 @@
-import { ReactNode } from "react"
-import { FlatListProps, ModalProps, StyleProp, ViewStyle } from "react-native"
 import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext"
-import { CountryFilterProps } from "./v2/modal/SearchElement"
 import { CountryPicker, CountryPickerProps } from "./CountryPicker"
-import {
-	Country,
-	CountryCode,
-	Region,
-	Subregion,
-	TranslationLanguageCode,
-} from "./types"
-import { TriggerProps } from "./v2/types/Props"
+import { TranslationLanguageCode } from "./types"
+import "./assets/global.css"
 
 /*interface Props {
 	trigger?: TriggerProps
@@ -51,6 +42,9 @@ type Props = CountryPickerProps & {
 	translation?: TranslationLanguageCode
 }
 
+/***
+ * Main component for the Speaker Picker library.
+ ***/
 export default function Main({
 	translation,
 	onSelect = () => {},
@@ -74,5 +68,4 @@ export {
 export { Flag } from "./Flag"
 export { FlagButton } from "./v2/trigger/FlagButton"
 export { ModalHeader } from "./v2/modal/ModalHeader"
-export { CountryPicker } from "./CountryPicker"
 export * from "./types"

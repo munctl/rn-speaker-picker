@@ -12,7 +12,7 @@ import { SearchElement, CountryFilterProps } from "./v2/modal/SearchElement"
 import { CountryModal } from "./v2/modal/CountryModal"
 import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
-import { SpeakerList } from "./v2/modal/list/SpeakerList"
+import { SpeakerList, SpeakerListProps } from "./v2/modal/list/SpeakerList"
 import { ModalHeader } from "./v2/modal/ModalHeader"
 import { TriggerProps } from "./v2/types/Props"
 
@@ -37,6 +37,7 @@ const renderSearch = (props: RenderCountryFilterProps): ReactNode =>
 
 export interface CountryPickerProps {
 	trigger?: TriggerProps
+	list?: Omit<Partial<SpeakerListProps>, "data" | "onSelect">
 	countryCode?: CountryCode
 	region?: Region
 	subregion?: Subregion
@@ -48,19 +49,11 @@ export interface CountryPickerProps {
 	flatListProps?: FlatListProps<Country>
 	withCloseButton?: boolean
 	withSearch?: boolean
-	withAlphaFilter?: boolean
-	withCallingCode?: boolean
-	withCurrency?: boolean
-	withFlag?: boolean
 	withTrigger?: boolean
 	disableNativeModal?: boolean
 	visible?: boolean
 	placeholder?: string
 	additional?: Country[]
-	containerButtonStyle?: StyleProp<ViewStyle>
-	closeButtonImage?: ImageSourcePropType
-	closeButtonStyle?: StyleProp<ViewStyle>
-	closeButtonImageStyle?: StyleProp<ImageStyle>
 	renderFlagButton?(props: ComponentProps<typeof FlagButton>): ReactNode
 	renderCountryFilter?(props: ComponentProps<typeof SearchElement>): ReactNode
 	onSelect(country: Country): void
@@ -76,6 +69,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 	const {
 		region,
 		trigger,
+		list,
 		subregion,
 		countryCodes,
 		countryCode,
@@ -86,17 +80,10 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 		onSelect,
 		withSearch,
 		withCloseButton,
-		withAlphaFilter,
-		withCallingCode,
-		withCurrency,
-		withFlag,
 		withTrigger,
 		disableNativeModal,
 		onClose: handleClose,
 		onOpen: handleOpen,
-		closeButtonImage,
-		closeButtonStyle,
-		closeButtonImageStyle,
 		excludeCountries,
 		preferredCountries,
 		additional,
@@ -148,7 +135,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 			countryCodes,
 			excludeCountries,
 			preferredCountries,
-			withAlphaFilter,
+			list?.withAlphaFilter,
 		)
 			.then((countries) => setCountries([...countries, ...(additional ?? [])]))
 			.catch(console.warn)
@@ -175,9 +162,6 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 				<ModalHeader
 					{...{
 						onClose,
-						closeButtonImage,
-						closeButtonImageStyle,
-						closeButtonStyle,
 						withCloseButton,
 						withSearch,
 					}}
@@ -194,15 +178,12 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 					}
 				/>
 				<SpeakerList
-					withCurrency={withCurrency ?? defaults.withCurrency}
-					withFlag={withFlag ?? defaults.withFlag}
-					withCallingCode={withCallingCode ?? defaults.withCallingCode}
 					{...{
+						...list,
 						onSelect: onSelectClose,
 						data: countries,
-						letters: [],
 						withAlphaFilter:
-							(withAlphaFilter ?? defaults.withAlphaFilter) &&
+							(list?.withAlphaFilter ?? defaults.withAlphaFilter) &&
 							searchTerm?.length === 0,
 						searchTerm,
 						filterFocus,

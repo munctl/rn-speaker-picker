@@ -12,10 +12,10 @@ export interface SpeakerListProps {
 	data: Country[]
 	searchTerm?: string
 	filterFocus?: boolean
-	withFlag: boolean
-	withAlphaFilter: boolean
-	withCallingCode: boolean
-	withCurrency: boolean
+	withFlag?: boolean
+	withAlphaFilter?: boolean
+	withCallingCode?: boolean
+	withCurrency?: boolean
 	onSelect(country: Country): void
 
 	wrapperClassName?: string
@@ -27,10 +27,10 @@ export interface SpeakerListProps {
 export function SpeakerList({
 	data,
 	searchTerm,
-	withAlphaFilter,
-	withFlag,
-	withCurrency,
-	withCallingCode,
+	withAlphaFilter = true,
+	withFlag = true,
+	withCurrency = false,
+	withCallingCode = false,
 	onSelect,
 	speakerList,
 	wrapperClassName = "flex-1 flex-row content-between mx-1",

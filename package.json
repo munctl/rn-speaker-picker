@@ -2,7 +2,7 @@
   "name": "@munctl/rn-speaker-picker",
   "version": "2.0.0-munctl",
   "description": "A React Native component to pick a speaker from a list of countries and NGOs, with flags and search functionality.",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   "scripts": {
     "start": "pnpm config:dev && expo start",
     "start:web": "pnpm config:dev && expo start -w",
-    "build": "rm -rf dist/ && tsc && cp -rf ./src/assets ./dist/assets && pnpm minify",
+    "build": "rm -rf dist/ && tsc -p tsconfig.publish.json && cp -rf ./src/assets ./dist/assets && pnpm minify && pnpx @tailwindcss/cli -i src/assets/global.css -o dist/assets/global.css -m",
     "minify": "pnpm minify:emoji",
     "minify:emoji": "./scripts/minify.js ./dist/assets/data/countries-emoji.json",
     "config:dev": "json -I -f package.json -e 'this.main=\"node_modules/expo/AppEntry.js\"'",
