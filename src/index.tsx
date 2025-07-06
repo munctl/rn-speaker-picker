@@ -3,41 +3,6 @@ import { CountryPicker, CountryPickerProps } from "./CountryPicker"
 import { TranslationLanguageCode } from "./types"
 import "./assets/global.css"
 
-/*interface Props {
-	trigger?: TriggerProps
-	countryCode?: CountryCode
-	region?: Region
-	subregion?: Subregion
-	countryCodes?: CountryCode[]
-	excludeCountries?: CountryCode[]
-	preferredCountries?: CountryCode[]
-	translation?: TranslationLanguageCode
-	modalProps?: ModalProps
-	filterProps?: CountryFilterProps
-	flatListProps?: FlatListProps<Country>
-	placeholder?: string
-	withAlphaFilter?: boolean
-	withCallingCode?: boolean
-	withCurrency?: boolean
-	withEmoji?: boolean
-	withCountryNameButton?: boolean
-	withCurrencyButton?: boolean
-	withCallingCodeButton?: boolean
-	withCloseButton?: boolean
-	withFlagButton?: boolean
-	withFilter?: boolean
-	withFlag?: boolean
-	withModal?: boolean
-	disableNativeModal?: boolean
-	visible?: boolean
-	containerButtonStyle?: StyleProp<ViewStyle>
-	additional?: Country[]
-	renderCountryFilter?(props: CountryFilterProps): ReactNode
-	onSelect(country: Country): void
-	onOpen?(): void
-	onClose?(): void
-}*/
-
 type Props = CountryPickerProps & {
 	translation?: TranslationLanguageCode
 }

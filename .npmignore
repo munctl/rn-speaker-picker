@@ -28,6 +28,7 @@ CODE_OF_CONDUCT.md
 typings.d.ts
 nativewind-env.d.ts
 tsconfig.json
+tsconfig.publish.json
 
 __tests__/
 .expo/

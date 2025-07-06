@@ -1,19 +1,12 @@
 import { ComponentProps, ReactNode, useEffect, useState } from "react"
-import {
-	FlatListProps,
-	ImageSourcePropType,
-	ImageStyle,
-	ModalProps,
-	StyleProp,
-	ViewStyle,
-} from "react-native"
+import { FlatListProps } from "react-native"
 import { useContext } from "./CountryContext"
-import { SearchElement, CountryFilterProps } from "./v2/modal/SearchElement"
-import { CountryModal } from "./v2/modal/CountryModal"
-import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
+import { CountryModal, ListModalProps } from "./v2/modal/CountryModal"
 import { SpeakerList, SpeakerListProps } from "./v2/modal/list/SpeakerList"
 import { ModalHeader } from "./v2/modal/ModalHeader"
+import { CountryFilterProps, SearchElement } from "./v2/modal/SearchElement"
+import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { TriggerProps } from "./v2/types/Props"
 
 interface State {
@@ -38,25 +31,26 @@ const renderSearch = (props: RenderCountryFilterProps): ReactNode =>
 export interface CountryPickerProps {
 	trigger?: TriggerProps
 	list?: Omit<Partial<SpeakerListProps>, "data" | "onSelect">
+	modal?: ListModalProps
+	countries?: {
+		showOnly?: CountryCode[] | string[]
+		preferred?: CountryCode[] | string[]
+		excluded?: CountryCode[] | string[]
+		additional?: Country[]
+	}
 	countryCode?: CountryCode
 	region?: Region
 	subregion?: Subregion
-	countryCodes?: CountryCode[]
-	excludeCountries?: CountryCode[]
-	preferredCountries?: CountryCode[]
-	modalProps?: ModalProps
 	filterProps?: CountryFilterProps
 	flatListProps?: FlatListProps<Country>
 	withCloseButton?: boolean
 	withSearch?: boolean
 	withTrigger?: boolean
-	disableNativeModal?: boolean
 	visible?: boolean
 	placeholder?: string
-	additional?: Country[]
 	renderFlagButton?(props: ComponentProps<typeof FlagButton>): ReactNode
 	renderCountryFilter?(props: ComponentProps<typeof SearchElement>): ReactNode
-	onSelect(country: Country): void
+	onSelect?(country: Country): void
 	onOpen?(): void
 	onClose?(): void
 }
@@ -70,23 +64,19 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 		region,
 		trigger,
 		list,
+		modal,
+		countries,
 		subregion,
-		countryCodes,
 		countryCode,
 		renderCountryFilter,
 		filterProps,
-		modalProps,
 		flatListProps,
 		onSelect,
 		withSearch,
 		withCloseButton,
-		withTrigger,
-		disableNativeModal,
+		withTrigger = true,
 		onClose: handleClose,
 		onOpen: handleOpen,
-		excludeCountries,
-		preferredCountries,
-		additional,
 	} = props
 
 	const [state, setState] = useState<State>({
@@ -96,7 +86,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 		filterFocus: false,
 	})
 	const { translation, getCountriesAsync } = useContext()
-	const { visible, searchTerm, countries, filterFocus } = state
+	const { visible, searchTerm, countries: countriesState, filterFocus } = state
 
 	useEffect(() => {
 		if (state.visible !== props.visible) {
@@ -132,12 +122,12 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 			translation,
 			region,
 			subregion,
-			countryCodes,
-			excludeCountries,
-			preferredCountries,
+			countries?.showOnly as CountryCode[],
+			countries?.excluded as CountryCode[],
+			countries?.preferred as CountryCode[],
 			list?.withAlphaFilter,
 		)
-			.then((countries) => setCountries([...countries, ...(additional ?? [])]))
+			.then((res) => setCountries([...res, ...(countries?.additional ?? [])]))
 			.catch(console.warn)
 
 		return () => {
@@ -155,7 +145,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 			)}
 			<CountryModal
 				withModal={withTrigger}
-				{...{ visible, disableNativeModal, ...modalProps }}
+				{...{ visible, ...modal }}
 				onRequestClose={onClose}
 				onDismiss={onClose}
 			>
@@ -181,7 +171,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 					{...{
 						...list,
 						onSelect: onSelectClose,
-						data: countries,
+						data: countriesState,
 						withAlphaFilter:
 							(list?.withAlphaFilter ?? defaults.withAlphaFilter) &&
 							searchTerm?.length === 0,

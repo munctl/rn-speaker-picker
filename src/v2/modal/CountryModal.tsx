@@ -3,30 +3,30 @@ import { Modal, ModalProps, Platform, SafeAreaView } from "react-native"
 import { AnimatedModal } from "./AnimatedModal"
 import { CountryModalContext } from "./CountryModalProvider"
 
+export interface ListModalProps extends ModalProps {
+	withModal?: boolean
+	children: ReactNode
+	outerClassName?: string
+	innerClassName?: string
+}
+
 export function CountryModal({
 	children,
 	withModal,
-	disableNativeModal,
+	outerClassName = "",
+	innerClassName = "flex-1 dark:bg-zinc-900 bg-zinc-100",
 	...props
-}: ModalProps & {
-	children: ReactNode
-	withModal?: boolean
-	disableNativeModal?: boolean
-}) {
-	const { teleport } = useContext(CountryModalContext)
-
-	const content = <SafeAreaView className="flex-1">{children}</SafeAreaView>
-	useEffect(() => {
-		if (disableNativeModal) {
-			teleport!(<AnimatedModal {...props}>{content}</AnimatedModal>)
-		}
-	}, [disableNativeModal])
-	if (withModal) {
-		if (Platform.OS === "web") return <Modal {...props}>{content}</Modal>
-		if (disableNativeModal) return null
-		return <Modal {...props}>{content}</Modal>
-	}
-	return content
+}: ListModalProps) {
+	const content = (
+		<SafeAreaView className={innerClassName}>{children}</SafeAreaView>
+	)
+	return withModal ? (
+		<Modal {...props} className={outerClassName}>
+			{content}
+		</Modal>
+	) : (
+		content
+	)
 }
 
 CountryModal.defaultProps = {
