@@ -173,8 +173,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 						onSelect: onSelectClose,
 						data: countriesState,
 						withAlphaFilter:
-							(list?.withAlphaFilter ?? defaults.withAlphaFilter) &&
-							searchTerm?.length === 0,
+							(list?.withAlphaFilter ?? true) && searchTerm?.length === 0,
 						searchTerm,
 						filterFocus,
 						flatListProps,
@@ -183,24 +182,4 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 			</CountryModal>
 		</>
 	)
-}
-
-const defaults: {
-	withCallingCode: boolean
-	withFlag: boolean
-	withCurrency: boolean
-	withAlphaFilter: boolean
-} = {
-	withCallingCode: false,
-	withFlag: true,
-	withCurrency: false,
-	withAlphaFilter: true,
-}
-
-CountryPicker.defaultProps = {
-	withModal: true,
-	withAlphaFilter: false,
-	withCallingCode: false,
-	placeholder: "Select Country",
-	allowFontScaling: true,
 }

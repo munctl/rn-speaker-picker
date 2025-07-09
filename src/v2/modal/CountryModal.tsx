@@ -12,7 +12,7 @@ export interface ListModalProps extends ModalProps {
 
 export function CountryModal({
 	children,
-	withModal,
+	withModal = true,
 	outerClassName = "",
 	innerClassName = "flex-1 dark:bg-zinc-900 bg-zinc-100",
 	...props
@@ -27,11 +27,4 @@ export function CountryModal({
 	) : (
 		content
 	)
-}
-
-CountryModal.defaultProps = {
-	animationType: "slide",
-	animated: true,
-	withModal: true,
-	disableNativeModal: false,
 }
