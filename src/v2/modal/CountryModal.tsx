@@ -1,7 +1,6 @@
-import { ReactNode, useContext, useEffect } from "react"
-import { Modal, ModalProps, Platform, SafeAreaView } from "react-native"
-import { AnimatedModal } from "./AnimatedModal"
-import { CountryModalContext } from "./CountryModalProvider"
+import { ReactNode } from "react"
+import { Modal, ModalProps } from "react-native"
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export interface ListModalProps extends ModalProps {
 	withModal?: boolean

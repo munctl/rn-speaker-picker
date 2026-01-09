@@ -3,13 +3,12 @@
     "name": "speaker-picker",
     "description": "Expo Speaker Picker",
     "slug": "speaker-picker",
-    "sdkVersion": "53.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -28,6 +27,9 @@
     },
     "android": {
       "package": "app.munctl.speakerpicker"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

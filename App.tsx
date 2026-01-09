@@ -5,7 +5,6 @@ import {
 	Switch,
 	Text,
 	TouchableOpacity,
-	SafeAreaView,
 	StatusBar,
 } from "react-native"
 import CountryPicker, {
@@ -16,6 +15,7 @@ import CountryPicker, {
 import { colorScheme } from "nativewind"
 import { TriggerProps } from "./src/v2/types/Props"
 import { SafeAreaProvider } from "react-native-safe-area-context"
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface OptionProps {
 	title: string
