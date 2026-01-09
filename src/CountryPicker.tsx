@@ -1,11 +1,11 @@
 import { ComponentProps, ReactNode, useEffect, useState } from "react"
-import { FlatListProps } from "react-native"
+import {FlatListProps, TextInputProps} from "react-native"
 import { useContext } from "./CountryContext"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
 import { CountryModal, ListModalProps } from "./v2/modal/CountryModal"
 import { SpeakerList, SpeakerListProps } from "./v2/modal/list/SpeakerList"
 import { ModalHeader } from "./v2/modal/ModalHeader"
-import { CountryFilterProps, SearchElement } from "./v2/modal/SearchElement"
+import { SearchElement } from "./v2/modal/SearchElement"
 import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { TriggerProps } from "./v2/types/Props"
 
@@ -41,7 +41,7 @@ export interface CountryPickerProps {
 	countryCode?: CountryCode
 	region?: Region
 	subregion?: Subregion
-	filterProps?: CountryFilterProps
+	filterProps?: TextInputProps
 	flatListProps?: FlatListProps<Country>
 	withCloseButton?: boolean
 	withSearch?: boolean
