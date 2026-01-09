@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list"
+import {FlashList, FlashListRef} from "@shopify/flash-list"
 import { ReactElement, RefObject, useMemo, useRef } from "react"
 import { LayoutChangeEvent, Text, TouchableOpacity, View } from "react-native"
 import {
@@ -8,7 +8,8 @@ import {
 	GestureUpdateEvent,
 	PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler"
-import { runOnJS, useSharedValue } from "react-native-reanimated"
+import { useSharedValue } from "react-native-reanimated"
+import {scheduleOnRN} from "react-native-worklets";
 
 interface Section<T> {
 	title: string
@@ -42,7 +43,7 @@ export function AlphabetScrollList<T>({
 	alphaFilter,
 	...rest
 }: AlphabetScrollListProps<T>) {
-	const flashListRef = useRef<FlashList<T | string>>(null)
+	const flashListRef = useRef<FlashListRef<T | string>>(null)
 
 	const sectionTitles = useMemo(() => sections.map((s) => s.title), [sections])
 
@@ -60,7 +61,7 @@ export function AlphabetScrollList<T>({
 
 	return (
 		<View className="flex-1" {...rest}>
-			<FlashList estimatedItemSize={48}
+			<FlashList
 				ref={flashListRef}
 				className="flex-1"
 				data={flatData}
@@ -106,7 +107,7 @@ function AlphaFilter<T>({
 	sections: Section<T>[]
 	getSectionHeaderIndex: (title: string) => number
 	onSectionChange?: (section: string) => void
-	flashListRef: RefObject<FlashList<string | T> | null>
+	flashListRef: RefObject<FlashListRef<string | T> | null>
 }) {
 	const containerY = useSharedValue(0)
 	const containerHeight = useSharedValue(0)
@@ -116,10 +117,10 @@ function AlphaFilter<T>({
 			const headerIndex = getSectionHeaderIndex(sections[index].title)
 			if (headerIndex !== -1 && flashListRef?.current) {
 				flashListRef?.current.scrollToIndex({
-					index: headerIndex,
-					animated: true,
-					viewPosition: 0,
-				})
+                    index: headerIndex,
+                    animated: true,
+                     viewPosition: 0,
+                }).then()
 				onSectionChange?.(sections[index].title)
 			}
 		}
@@ -133,7 +134,7 @@ function AlphaFilter<T>({
 		let index = Math.floor(y / letterHeight)
 		if (index < 0) index = 0
 		if (index >= sections.length) index = sections.length - 1
-		runOnJS(scrollToSection)(index)
+		scheduleOnRN(() => scrollToSection(index))
 	}
 	function onContainerLayout(e: LayoutChangeEvent) {
 		containerY.set(e.nativeEvent.layout.y)
