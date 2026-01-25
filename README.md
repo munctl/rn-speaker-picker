@@ -22,7 +22,7 @@ A fork of [react-native-country-picker-modal](https://github.com/xcarpentier/rea
 
 ## Example
 
-For an example, open [App.tsx](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/App.tsx)
+For an example, open [App.tsx](https://github.com/munctl/rn-speaker-picker/blob/master/App.tsx)
 
 ## Props
 

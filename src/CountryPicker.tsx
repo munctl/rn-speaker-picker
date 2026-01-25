@@ -173,6 +173,7 @@ export const CountryPicker: React.FC<CountryPickerProps> = (props) => {
 						searchTerm,
 						filterFocus,
 						flatListProps,
+						countries,
 					}}
 				/>
 			</CountryModal>

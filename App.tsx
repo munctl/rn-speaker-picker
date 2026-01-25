@@ -184,16 +184,18 @@ export default function App() {
 								withCurrency,
 								withFlag,
 							}}
+              countries={{
+                excluded: ["FR"],
+                preferred: ["US", "GB"]
+              }}
 							{...{
 								countryCode,
 								visible,
 								withSearch,
-								excludeCountries: ["FR"],
 								withTrigger,
 								withCloseButton,
 								onSelect,
 								disableNativeModal,
-								preferredCountries: ["US", "GB"],
 								onClose: () => setVisible(false),
 								onOpen: () => setVisible(true),
 							}}

@@ -17,6 +17,12 @@ export interface SpeakerListProps {
   withAlphaFilter?: boolean
   withCallingCode?: boolean
   withCurrency?: boolean
+  countries?: {
+    showOnly?: Country[] | string[]
+    preferred?: Country[] | string[]
+    excluded?: Country[] | string[]
+    additional?: Country[]
+  }
 
   onSelect(country: Country): void
 
@@ -36,14 +42,25 @@ export function SpeakerList({
                               onSelect,
                               speakerList,
                               wrapperClassName = "flex-1 flex-row content-between mx-1",
+                              countries,
                               ...rest
                             }: SpeakerListProps) {
   const {search} = useCountryContext()
 
   const sections = useMemo(() => {
     const groups: Record<string, Country[]> = {}
+    const PREFERRED = "★"
 
     search(searchTerm, data).forEach((d) => {
+      const isPreferred = countries?.preferred?.some((p) =>
+        typeof p === "string" ? p === d.cca2 : p.cca2 === d.cca2
+      )
+
+      if (isPreferred) {
+        if (!groups[PREFERRED]) groups[PREFERRED] = []
+        groups[PREFERRED].push(d)
+        return
+      }
       const name = d.name.toString()
       if (!name) return
 
@@ -53,7 +70,11 @@ export function SpeakerList({
     })
     // Sort the section titles by Unicode order
     return Object.keys(groups)
-      .sort((a, b) => a.localeCompare(b))
+      .sort((a, b) => {
+        if (a === PREFERRED) return -1
+        if (b === PREFERRED) return 1
+        return a.localeCompare(b)
+      })
       .map((ch) => ({title: ch, data: groups[ch]}))
   }, [data, searchTerm, search]);
 
