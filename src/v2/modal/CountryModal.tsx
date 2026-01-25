@@ -13,7 +13,7 @@ export interface ListModalProps extends ModalProps {
 export function CountryModal({
                                children,
                                withModal = true,
-                               outerClassName = "flex-1",
+                               outerClassName = "flex-1 dark:bg-zinc-900 bg-zinc-100",
                                innerClassName = "flex-1 dark:bg-zinc-900 bg-zinc-100",
                                ...props
                              }: ListModalProps) {
