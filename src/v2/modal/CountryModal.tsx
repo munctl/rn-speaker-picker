@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
-import { Modal, ModalProps } from "react-native"
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Modal, ModalProps, View } from "react-native"
+import { StyledSafeAreaView } from "../../styled/StyledSafeAreaView"
 
 export interface ListModalProps extends ModalProps {
 	withModal?: boolean
@@ -12,12 +12,14 @@ export interface ListModalProps extends ModalProps {
 export function CountryModal({
 	children,
 	withModal = true,
-	outerClassName = "",
+	outerClassName = "flex-1",
 	innerClassName = "flex-1 dark:bg-zinc-900 bg-zinc-100",
 	...props
 }: ListModalProps) {
 	const content = (
-		<SafeAreaView className={innerClassName}>{children}</SafeAreaView>
+		<StyledSafeAreaView className={outerClassName}>
+			<View className={innerClassName}>{children}</View>
+		</StyledSafeAreaView>
 	)
 	return withModal ? (
 		<Modal {...props} className={outerClassName}>

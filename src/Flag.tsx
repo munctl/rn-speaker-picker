@@ -1,17 +1,16 @@
-import { memo } from "react"
+import React, { memo } from "react"
 import { useAsync } from "react-async-hook"
-import { ActivityIndicator, Image, View } from "react-native"
-import { useContext } from "./CountryContext"
+import { ActivityIndicator, Image, View, ViewProps } from "react-native"
+import { useCountryContext } from "./CountryContext"
 import { CountryCode } from "./types"
 
-interface FlagType {
+interface FlagProps extends ViewProps {
 	countryCode: CountryCode
 	flagSize: number
-	[key: string]: any
 }
 
-const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
-	const { getImageFlagAsync } = useContext()
+const ImageFlag: React.FC<FlagProps> = memo(({ countryCode, flagSize }) => {
+	const { getImageFlagAsync } = useCountryContext()
 	const asyncResult = useAsync(getImageFlagAsync, [countryCode])
 	if (asyncResult.loading) {
 		return <ActivityIndicator size={"small"} />
@@ -26,7 +25,7 @@ const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
 	)
 })
 
-export function Flag({ countryCode, flagSize, ...others }: FlagType) {
+export const Flag: React.FC<FlagProps> = ({ countryCode, flagSize, ...others }) => {
 	return (
 		<View {...others}>
 			<ImageFlag {...{ countryCode, flagSize }} />

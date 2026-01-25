@@ -9,7 +9,7 @@ import {
 	PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler"
 import { useSharedValue } from "react-native-reanimated"
-import {scheduleOnRN} from "react-native-worklets";
+import { scheduleOnRN } from "react-native-worklets";
 
 interface Section<T> {
 	title: string
@@ -30,7 +30,7 @@ export interface AlphabetScrollListProps<T> {
 		textClassName?: string
 		onSectionChange?: (section: string) => void
 	}
-	[key: string]: any
+	[key: string]: unknown
 }
 
 export function AlphabetScrollList<T>({
@@ -43,7 +43,7 @@ export function AlphabetScrollList<T>({
 	alphaFilter,
 	...rest
 }: AlphabetScrollListProps<T>) {
-	const flashListRef = useRef<FlashListRef<T | string>>(null)
+	const flashListRef = useRef<FlashListRef<T>>(null)
 
 	const sectionTitles = useMemo(() => sections.map((s) => s.title), [sections])
 
@@ -55,7 +55,7 @@ export function AlphabetScrollList<T>({
 		flatData.push(...section.data)
 	})
 
-	const isSectionHeader = (i: any) => sectionTitles.includes(i)
+	const isSectionHeader = (i: string | T) => sectionTitles.includes(i as string)
 	const getSectionHeaderIndex = (title: string) =>
 		flatData.findIndex((i) => i === title)
 
@@ -107,7 +107,7 @@ function AlphaFilter<T>({
 	sections: Section<T>[]
 	getSectionHeaderIndex: (title: string) => number
 	onSectionChange?: (section: string) => void
-	flashListRef: RefObject<FlashListRef<string | T> | null>
+	flashListRef: RefObject<FlashListRef<T>>
 }) {
 	const containerY = useSharedValue(0)
 	const containerHeight = useSharedValue(0)
@@ -117,15 +117,12 @@ function AlphaFilter<T>({
 			const headerIndex = getSectionHeaderIndex(sections[index].title)
 			if (headerIndex !== -1 && flashListRef?.current) {
 				flashListRef?.current.scrollToIndex({
-                    index: headerIndex,
-                    animated: true,
-                     viewPosition: 0,
+                    index: headerIndex, animated: true, viewPosition: 0,
                 }).then()
 				onSectionChange?.(sections[index].title)
 			}
 		}
 	}
-
 	function onGestureEvent(
 		event: GestureUpdateEvent<PanGestureHandlerEventPayload>,
 	) {
@@ -134,7 +131,7 @@ function AlphaFilter<T>({
 		let index = Math.floor(y / letterHeight)
 		if (index < 0) index = 0
 		if (index >= sections.length) index = sections.length - 1
-		scheduleOnRN(() => scrollToSection(index))
+		scheduleOnRN(scrollToSection, index)
 	}
 	function onContainerLayout(e: LayoutChangeEvent) {
 		containerY.set(e.nativeEvent.layout.y)

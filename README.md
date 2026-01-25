@@ -1,17 +1,24 @@
 # RN Speaker Picker
 A fork of [react-native-country-picker-modal](https://github.com/xcarpentier/react-native-country-picker-modal) with tweaks for use in [MUNctl](https://munctl.app/).
 
+## Testing
+- Install dev deps: `pnpm install`
+- Run unit and component tests: `pnpm test`
+- The Jest setup mocks reanimated, gesture-handler, flash-list, and safe-area-context for React Native components.
+
+## E2E
+- Start Expo in one terminal: `pnpm start`
+- Launch your simulator/emulator (iOS Simulator or Android Emulator)
+- Run Maestro flows: `pnpm e2e:ios` or `pnpm e2e:android`. Make sure you've preinstalled the development builds on the device.
+- Flows live in `maestro/main.yaml` and exercise modal open/close, alpha scroll, and search selections.
+
 ## Tweaks
 * Upgraded dependencies
 * Add custom countries/speakers at runtime
 * Improved alpha filter
 * Visual redesign
 
-| iOS                                                        | Android                                                                                          | Web                                                                                               |
-|------------------------------------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| <img src="./media/iOS-Demo.gif" width="200" height="400"/> | <img src="https://media.giphy.com/media/Q7SDti4eARGx2CQIGE/giphy.gif" width="200" height="400"/> | <img  src="https://media.giphy.com/media/gKl3z3c7sVVL7KSSh8/giphy.gif" width="250" height="400"/> |
-
-
+<img src="./media/iOS-Demo.gif" width="200" height="400"/>
 
 ## Example
 
@@ -52,20 +59,6 @@ For an example, open [App.tsx](https://github.com/xcarpentier/react-native-count
 - `closeButtonImageStyle?`: StyleProp<ImageStyle>
 - `disableNativeModal?`: boolean (you have to wrap your all app with CountryModalProvider)
 - `preferredCountries`: [CountryCode](https://github.com/xcarpentier/react-native-country-picker-modal/blob/master/src/types.ts#L254) preferred countries they appear first (`withAlphaFilter` must be false)
-
-## Dark theme example
-
-<p style="text-align: center">
-    <img alt="react-native-country-picker-modal-dark" src="https://user-images.githubusercontent.com/2692166/40585272-094f817a-61b0-11e8-9668-abff0aeddb0e.png" width=150>
-</p>
-
-A simple example to display a `CountryPicker` component with a dark theme.
-
-```tsx
-import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal'
-
-const MyDarkView = () => <CountryPicker theme={DARK_THEME} />
-```
 
 ## License
 

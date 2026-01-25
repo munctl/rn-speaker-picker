@@ -1,0 +1,12 @@
+appId: app.munctl.speakerpicker
+---
+- tapOn:
+    id: "country-picker-trigger"
+- assertVisible:
+    id: "text-input-country-filter"
+- tapOn:
+    id: "close-modal-button"
+- assertNotVisible:
+    id: "text-input-country-filter"
+
+

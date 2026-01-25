@@ -1,6 +1,6 @@
-import { memo, type ReactNode, useEffect, useState } from "react"
+import React, { memo, type ReactNode, useEffect, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import { useContext } from "../../CountryContext"
+import { useCountryContext } from "../../CountryContext"
 import { Flag } from "../../Flag"
 import getSuffix from "../../utils/getSuffix"
 import { TriggerProps } from "../types/Props"
@@ -26,7 +26,7 @@ const TriggerInner = memo(
 		textClassName = "text-lg text-zinc-800 dark:text-zinc-100",
 		...rest
 	}: TriggerProps) => {
-		const { translation, getCountryInfoAsync } = useContext()
+		const { translation, getCountryInfoAsync } = useCountryContext()
 		const [state, setState] = useState({
 			countryName: "",
 			currency: "",
@@ -76,7 +76,7 @@ export function FlagButton({
 	...rest
 }: TriggerProps) {
 	return (
-		<TouchableOpacity onPress={onOpen} {...rest} testID={rest.id}>
+		<TouchableOpacity onPress={onOpen} {...rest} testID={rest.id as string}>
 			<View className={wrapperClassName}>
 				<TriggerInner
 					{...{

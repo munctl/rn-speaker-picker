@@ -10,7 +10,7 @@ type Props = CountryPickerProps & {
 /***
  * Main component for the Speaker Picker library.
  ***/
-export default function Main({
+function Main({
 	translation,
 	onSelect = () => {},
 	...props
@@ -21,6 +21,9 @@ export default function Main({
 		</CountryProvider>
 	)
 }
+
+export default Main
+export const SpeakerPicker = Main
 
 export { SearchElement } from "./v2/modal/SearchElement"
 export { SpeakerList } from "./v2/modal/list/SpeakerList"

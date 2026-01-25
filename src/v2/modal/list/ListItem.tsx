@@ -35,8 +35,8 @@ export default function ListItem({
 
 	const suffix = getSuffix({
 		...{ withCurrency, withCallingCode },
-		callingCode: country.callingCode.join("/"),
-		currency: country.currency.join("/"),
+		callingCode: country.callingCode?.join("/"),
+		currency: country.currency?.join("/"),
 	})
 
 	return (

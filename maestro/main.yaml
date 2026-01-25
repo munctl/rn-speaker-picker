@@ -1,10 +1,9 @@
-- tapOn:
-    id: 'country-picker-trigger'
-- tapOn:
-    text: 'Z'
-- tapOn:
-    text: 'A'
-- tapOn:
-    id: 'country-selector-AQ'
-- assertVisible:
-    text: 'Antarctica '
+appId: app.munctl.speakerpicker
+---
+- launchApp
+- runFlow:
+    file: flows/open-and-close.yaml
+- runFlow:
+    file: flows/alpha-scroll-select.yaml
+- runFlow:
+    file: flows/search-and-select.yaml

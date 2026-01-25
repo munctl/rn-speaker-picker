@@ -41,7 +41,11 @@ export function ModalHeader({
 			{withCloseButton && (
 				<View>
 					<GestureHandlerRootView>
-						<StyledPressable onPress={onClose} className={wrapperClassName}>
+						<StyledPressable
+							onPress={onClose}
+							testID="close-modal-button"
+							className={wrapperClassName}
+						>
 							<StyledMaterialIcon
 								name="close"
 								size={18}

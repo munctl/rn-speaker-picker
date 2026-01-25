@@ -10,12 +10,12 @@ import {
 import CountryPicker, {
 	type Country,
 	type CountryCode,
-	CountryModalProvider,
 } from "./src"
 import { colorScheme } from "nativewind"
 import { TriggerProps } from "./src/v2/types/Props"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {StyledSafeAreaView} from "./src/styled/StyledSafeAreaView";
 
 interface OptionProps {
 	title: string
@@ -59,7 +59,7 @@ export default function App() {
 	const [visible, setVisible] = useState(false)
 	const [dark, setDark] = useState(false)
 	const [disableNativeModal, setDisableNativeModal] = useState(false)
-	const onSelect = (country: Country) => {
+ 	const onSelect = (country: Country) => {
 		setCountryCode(country.cca2)
 		setCountry(country)
 	}
@@ -70,8 +70,7 @@ export default function App() {
 
 	return (
 		<SafeAreaProvider className="bg-zinc-100 dark:bg-zinc-900">
-			<SafeAreaView>
-				{/*<CountryModalProvider>*/}
+			<StyledSafeAreaView>
 				<StatusBar />
 				<ScrollView className="px-2">
 					<View>
@@ -188,6 +187,7 @@ export default function App() {
 							}}
 							{...{
 								countryCode,
+								visible,
 								withSearch,
 								excludeCountries: ["FR"],
 								withTrigger,
@@ -195,7 +195,6 @@ export default function App() {
 								onSelect,
 								disableNativeModal,
 								preferredCountries: ["US", "GB"],
-								modalProps: { visible },
 								onClose: () => setVisible(false),
 								onOpen: () => setVisible(true),
 							}}
@@ -222,8 +221,7 @@ export default function App() {
 						)}
 					</View>
 				</ScrollView>
-				{/*</CountryModalProvider>*/}
-			</SafeAreaView>
+			</StyledSafeAreaView>
 		</SafeAreaProvider>
 	)
 }

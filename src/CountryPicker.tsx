@@ -1,6 +1,6 @@
-import { ComponentProps, ReactNode, useEffect, useState } from "react"
-import {FlatListProps, TextInputProps} from "react-native"
-import { useContext } from "./CountryContext"
+import React, { ComponentProps, ReactNode, useEffect, useState } from "react"
+import { FlatListProps, TextInputProps } from "react-native"
+import { useCountryContext } from "./CountryContext"
 import { Country, CountryCode, FlagType, Region, Subregion } from "./types"
 import { CountryModal, ListModalProps } from "./v2/modal/CountryModal"
 import { SpeakerList, SpeakerListProps } from "./v2/modal/list/SpeakerList"
@@ -16,8 +16,7 @@ interface State {
 	filterFocus?: boolean
 }
 
-interface RenderCountryFilterProps
-	extends ComponentProps<typeof SearchElement> {
+interface RenderCountryFilterProps extends ComponentProps<typeof SearchElement> {
 	renderCountryFilter?(props: ComponentProps<typeof SearchElement>): ReactNode
 }
 
@@ -56,10 +55,8 @@ export interface CountryPickerProps {
 }
 /***
  * The main CountryPicker component that allows users to select a country from a modal.
- * @param {CountryPickerProps} props - The properties for the CountryPicker component.
- * @returns {ReactNode} The rendered CountryPicker component.
- ***/
-export function CountryPicker(props: CountryPickerProps): ReactNode {
+ */
+export const CountryPicker: React.FC<CountryPickerProps> = (props) => {
 	const {
 		region,
 		trigger,
@@ -85,7 +82,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 		searchTerm: "",
 		filterFocus: false,
 	})
-	const { translation, getCountriesAsync } = useContext()
+	const { translation, getCountriesAsync } = useCountryContext()
 	const { visible, searchTerm, countries: countriesState, filterFocus } = state
 
 	useEffect(() => {
@@ -96,19 +93,17 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 
 	const onOpen = () => {
 		setState({ ...state, visible: true })
-		if (handleOpen) handleOpen()
+		if (typeof handleOpen === "function") handleOpen()
 	}
 	const onClose = () => {
 		setState({ ...state, searchTerm: "", visible: false })
-		if (handleClose) handleClose()
+		if (typeof handleClose === "function") handleClose()
 	}
 
-	const setSearchTerm = (searchTerm: string) =>
-		setState({ ...state, searchTerm })
-	const setCountries = (countries: Country[]) =>
-		setState({ ...state, countries })
+	const setSearchTerm = (searchTerm: string) => setState({ ...state, searchTerm })
+	const setCountries = (countries: Country[]) => setState({ ...state, countries })
 	const onSelectClose = (country: Country) => {
-		onSelect(country)
+		if (typeof onSelect === "function") onSelect(country)
 		onClose()
 	}
 	const onFocus = () => setState({ ...state, filterFocus: true })
@@ -125,7 +120,7 @@ export function CountryPicker(props: CountryPickerProps): ReactNode {
 			countries?.showOnly as CountryCode[],
 			countries?.excluded as CountryCode[],
 			countries?.preferred as CountryCode[],
-			list?.withAlphaFilter,
+			(list?.withAlphaFilter as boolean | undefined),
 		)
 			.then((res) => setCountries([...res, ...(countries?.additional ?? [])]))
 			.catch(console.warn)

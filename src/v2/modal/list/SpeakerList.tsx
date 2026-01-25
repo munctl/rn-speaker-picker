@@ -1,5 +1,5 @@
 import { View } from "react-native"
-import { useContext } from "../../../CountryContext"
+import { useCountryContext } from "../../../CountryContext"
 import { Country } from "../../../types"
 import {
 	AlphabetScrollList,
@@ -21,7 +21,7 @@ export interface SpeakerListProps {
 	wrapperClassName?: string
 	speakerList?: AlphabetScrollListProps<Country>
 
-	[key: string]: any
+	[key: string]: unknown
 }
 
 export function SpeakerList({
@@ -36,7 +36,7 @@ export function SpeakerList({
 	wrapperClassName = "flex-1 flex-row content-between mx-1",
 	...rest
 }: SpeakerListProps) {
-	const { search } = useContext()
+	const { search } = useCountryContext()
 	return (
 		<View {...rest} className={wrapperClassName}>
 			<View className="grow">

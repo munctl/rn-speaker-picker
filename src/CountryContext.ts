@@ -37,7 +37,13 @@ export const CountryContext = createContext<CountryContextParam>(
 	DEFAULT_COUNTRY_CONTEXT,
 )
 
-export const useContext = () => uc(CountryContext)
+/**
+ * useCountryContext - typed helper hook to access the CountryContext
+ * Keeping `useContext` exported as an alias for backward compatibility.
+ */
+export const useCountryContext = () => uc(CountryContext)
+
+export const useContext = useCountryContext
 
 export const { Provider: CountryProvider, Consumer: CountryConsumer } =
 	CountryContext

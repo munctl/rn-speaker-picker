@@ -13,7 +13,7 @@ import {
 const imageJsonUrl =
 	"https://xcarpentier.github.io/react-native-country-picker-modal/countries/"
 
-type CountryMap = { [key in CountryCode]: Country }
+export type CountryMap = { [key in CountryCode]: Country }
 
 interface DataCountry {
 	emojiCountries?: CountryMap
@@ -33,8 +33,8 @@ export const loadDataAsync = (
 					if (!data.imageCountries) {
 						fetch(imageJsonUrl)
 							.then((response: Response) => response.json())
-							.then((remoteData: any) => {
-								data.imageCountries = remoteData
+							.then((remoteData: unknown) => {
+								data.imageCountries = remoteData as CountryMap
 								resolve(data.imageCountries!)
 							})
 							.catch(reject)
