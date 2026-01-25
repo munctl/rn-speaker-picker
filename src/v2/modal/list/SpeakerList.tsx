@@ -55,12 +55,16 @@ export function SpeakerList({
       const isPreferred = countries?.preferred?.some((p) =>
         typeof p === "string" ? p === d.cca2 : p.cca2 === d.cca2
       )
+      const isExcluded = countries?.excluded?.some((p) =>
+        typeof p === "string" ? p === d.cca2 : p.cca2 === d.cca2
+      )
 
       if (isPreferred) {
         if (!groups[PREFERRED]) groups[PREFERRED] = []
         groups[PREFERRED].push(d)
         return
       }
+      if (isExcluded) return
       const name = d.name.toString()
       if (!name) return
 
