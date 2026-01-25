@@ -1,5 +1,5 @@
 import {FlashList, FlashListRef} from "@shopify/flash-list"
-import { ReactElement, RefObject, useMemo, useRef } from "react"
+import { ReactElement, RefObject, useEffect, useMemo, useRef } from "react"
 import { LayoutChangeEvent, Text, TouchableOpacity, View } from "react-native"
 import {
 	Gesture,
@@ -104,21 +104,25 @@ function AlphaFilter<T>({
 }: {
 	wrapperClassName?: string
 	textClassName?: string
-	sections: Section<T>[]
+	sections: Section<T>[],
 	getSectionHeaderIndex: (title: string) => number
 	onSectionChange?: (section: string) => void
 	flashListRef: RefObject<FlashListRef<T>>
 }) {
-	const containerY = useSharedValue(0)
 	const containerHeight = useSharedValue(0)
+	const sectionsLength = useSharedValue(sections.length);
+
+	useEffect(() => {
+		sectionsLength.value = sections.length;
+	}, [sections.length]);
 
 	function scrollToSection(index: number) {
 		if (index >= 0 && index < sections.length) {
 			const headerIndex = getSectionHeaderIndex(sections[index].title)
-			if (headerIndex !== -1 && flashListRef?.current) {
-				flashListRef?.current.scrollToIndex({
+			if (headerIndex !== -1 && flashListRef.current) {
+				flashListRef.current.scrollToIndex({
                     index: headerIndex, animated: true, viewPosition: 0,
-                }).then()
+                })
 				onSectionChange?.(sections[index].title)
 			}
 		}
@@ -126,16 +130,15 @@ function AlphaFilter<T>({
 	function onGestureEvent(
 		event: GestureUpdateEvent<PanGestureHandlerEventPayload>,
 	) {
-		const y = Math.max(0, event.absoluteY - containerY.get())
-		const letterHeight = containerHeight.get() / sections.length || 1
+		const y = Math.max(0, event.y)
+		const letterHeight = containerHeight.value / sectionsLength.value || 1
 		let index = Math.floor(y / letterHeight)
 		if (index < 0) index = 0
-		if (index >= sections.length) index = sections.length - 1
+		if (index >= sectionsLength.value) index = sectionsLength.value - 1
 		scheduleOnRN(scrollToSection, index)
 	}
 	function onContainerLayout(e: LayoutChangeEvent) {
-		containerY.set(e.nativeEvent.layout.y)
-		containerHeight.set(e.nativeEvent.layout.height)
+		containerHeight.value = e.nativeEvent.layout.height
 	}
 	const pan = Gesture.Pan().onUpdate(onGestureEvent)
 	return (
@@ -151,7 +154,7 @@ function AlphaFilter<T>({
 								<Text className={textClassName}>{section.title}</Text>
 							</TouchableOpacity>
 						))}
-					</View>
+					</	View>
 				</GestureDetector>
 			</GestureHandlerRootView>
 		</View>
