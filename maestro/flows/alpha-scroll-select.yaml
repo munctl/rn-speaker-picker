@@ -7,13 +7,9 @@ appId: app.munctl.speakerpicker
 - tapOn:
     text: "Z"
 - tapOn:
-    text: "A"
-- tapOn:
-    id: "country-selector-AQ"
+    id: "country-selector-ZM"
 - assertVisible:
-    text: "Antarctica "
-- tapOn:
-    id: "close-modal-button"
+    text: "Zambia "
 - assertNotVisible:
     id: "text-input-country-filter"
 
