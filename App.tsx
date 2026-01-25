@@ -14,7 +14,6 @@ import CountryPicker, {
 import { colorScheme } from "nativewind"
 import { TriggerProps } from "./src/v2/types/Props"
 import { SafeAreaProvider } from "react-native-safe-area-context"
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {StyledSafeAreaView} from "./src/styled/StyledSafeAreaView";
 
 interface OptionProps {

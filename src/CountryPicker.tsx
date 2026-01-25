@@ -8,6 +8,7 @@ import { ModalHeader } from "./v2/modal/ModalHeader"
 import { SearchElement } from "./v2/modal/SearchElement"
 import { FlagButton, ModalTrigger } from "./v2/trigger/FlagButton"
 import { TriggerProps } from "./v2/types/Props"
+import {StyledSafeAreaView} from "./styled/StyledSafeAreaView";
 
 interface State {
 	visible: boolean
