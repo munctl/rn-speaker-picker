@@ -2,11 +2,11 @@ import {FlashList, FlashListRef} from "@shopify/flash-list"
 import { ReactElement, RefObject, useEffect, useMemo, useRef } from "react"
 import { LayoutChangeEvent, Text, TouchableOpacity, View } from "react-native"
 import {
-	Gesture,
-	GestureDetector,
-	GestureHandlerRootView,
-	GestureUpdateEvent,
-	PanGestureHandlerEventPayload,
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+  GestureUpdateEvent,
+  PanGestureHandlerEventPayload, TapGestureHandlerEventPayload,
 } from "react-native-gesture-handler"
 import { useSharedValue } from "react-native-reanimated"
 import { scheduleOnRN } from "react-native-worklets";
@@ -128,7 +128,7 @@ function AlphaFilter<T>({
 		}
 	}
 	function onGestureEvent(
-		event: GestureUpdateEvent<PanGestureHandlerEventPayload>,
+		event: GestureUpdateEvent<PanGestureHandlerEventPayload | TapGestureHandlerEventPayload>,
 	) {
 		const y = Math.max(0, event.y)
 		const letterHeight = containerHeight.value / sectionsLength.value || 1
@@ -141,10 +141,13 @@ function AlphaFilter<T>({
 		containerHeight.value = e.nativeEvent.layout.height
 	}
 	const pan = Gesture.Pan().onUpdate(onGestureEvent)
+  const tap = Gesture.Tap().onStart(onGestureEvent)
+  const gesture = Gesture.Simultaneous(pan, tap);
+
 	return (
 		<View className="absolute right-0 h-full">
 			<GestureHandlerRootView>
-				<GestureDetector gesture={pan}>
+				<GestureDetector gesture={gesture}>
 					<View className={wrapperClassName} onLayout={onContainerLayout}>
 						{sections.map((section, i) => (
 							<TouchableOpacity
